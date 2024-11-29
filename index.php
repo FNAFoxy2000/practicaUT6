@@ -15,6 +15,7 @@ if (!isset($_SESSION["usuario"])) {
 <?php
 }
 
+// Si tiene la sesion iniciada
 if (isset($_SESSION["usuario"])) {
     // Comprobar si es admin
 
@@ -24,8 +25,8 @@ if (isset($_SESSION["usuario"])) {
 
 }
 
-if (isset($_POST["email"]) && isset($_POST["usuario"]) && isset($_POST["password"])) {
-    // Si tiene email significa que está registrandose  
+// Si tiene email significa que está registrandose  
+if (isset($_POST["email"]) && isset($_POST["usuario"]) && isset($_POST["password"])) {   
     // Insert a base de datos
     $registro = BD::RegistrarUsuario($_POST["usuario"], $_POST["password"], $_POST["email"]);
     if($registro){
@@ -34,8 +35,9 @@ if (isset($_POST["email"]) && isset($_POST["usuario"]) && isset($_POST["password
         echo "<p>No se pudo registrar</p>";
     }
 }
-if (!isset($_POST["email"]) && isset($_POST["usuario"]) && isset($_POST["password"])) {
-    // Si NO tiene email significa que está logeando
+
+// Si NO tiene email significa que quiere iniciar sesion
+if (!isset($_POST["email"]) && isset($_POST["usuario"]) && isset($_POST["password"])) {    
     $login = BD::Login($_POST["usuario"], $_POST["password"]);
     if($login){
         echo "<p>Sesion iniciada correctamenet</p>";
