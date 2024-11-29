@@ -1,4 +1,5 @@
 <?php
+require_once "BD.php";
 session_start();
 
 if (!isset($_SESSION["usuario"])) {
@@ -11,25 +12,27 @@ if (!isset($_SESSION["usuario"])) {
     <form action="login.php" method="POST">
         <button type="submit" value="login">Iniciar sesión</button>
     </form>
-<?
+<?php
 }
 
-if (isset($_SESSION["usuario"])){
+if (isset($_SESSION["usuario"])) {
     // Comprobar si es admin
 
     // Si es admin Redirigir a ventana de admin
 
     // Si no es admin Redirigir a ventana usuario
-    
+
 }
 
-if(isset($_POST["email"])){
+if (isset($_POST["email"])) {
     // Si tiene email significa que está registrandose
-
+    
     // Insert a base de datos
 }
-if(!isset($_POST["email"])){
+if (!isset($_POST["email"])) {
     // Si NO tiene email significa que está logeando
 
     // Comprobar usuario y contraseña con la base de datos
 }
+
+?>

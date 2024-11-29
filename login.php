@@ -14,6 +14,7 @@
         <input type="text" name="usuario" id="usuario"><br><br>
         <label for="password">Contraseña:</label>
         <input type="password" name="password" id="password"><br><br>
+        <button type="submit">Iniciar Sesion</button>
     </form>
 </body>
 

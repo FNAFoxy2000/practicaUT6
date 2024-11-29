@@ -15,6 +15,7 @@
         <input type="password" name="password" id="password"><br><br>
         <label for="email">Email:</label>
         <input type="email" name="email" id="email"><br><br>
+        <button type="submit">Registrarse</button>
     </form>
 </body>
 
