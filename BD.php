@@ -14,7 +14,7 @@ class BD
             // Crear conexion PDO
             self::$conn = new PDO(BD::$destino, BD::$user, BD::$password);
             self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Conectado :)<br>";
+            // echo "Conectado :)<br>";
         } catch (PDOException $e) {
             echo "Error en la conexion: " . $e->getMessage();
         }
@@ -28,26 +28,29 @@ class BD
     }
 
     // REGISTRAR
-    public static function RegistrarUsuario($usuario, $password, $email) {
+    public static function RegistrarUsuario($usuario, $password, $email): bool {
         try {
-            $sql = "INSERT INTO usuarios (usuario_nombre, password, email) VALUES (:usuario, :password, :email)";
+            $sql = "INSERT INTO usuario (usuario_nombre, password, email) VALUES (:usuario, :password, :email)";
+            $passwordCifrada = password_hash($password, PASSWORD_DEFAULT); // Hasheamos el password
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':usuario', $usuario);
-            $stmt->bindParam(':password', password_hash($password, PASSWORD_DEFAULT)); // Hasheamos el password
+            $stmt->bindParam(':password', $passwordCifrada); 
             $stmt->bindParam(':email', $email);
             $stmt->execute();
-            return "Usuario registrado con éxito";
+            return true;
         } catch (PDOException $e) {
             throw new Exception("Error al registrar usuario: " . $e->getMessage());
+        } finally{
+            self::CerrarConexion();
         }
     }
 
     // INICIAR SESION
-    public static function Login($usuario, $password) {
+    public static function Login($usuario, $password): bool {
         try {
             // Crear la consulta SQL
-            $sql = "SELECT password FROM usuarios WHERE usuario_nombre = :usuario";
+            $sql = "SELECT password FROM usuario WHERE usuario_nombre = :usuario";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':usuario', $usuario);
@@ -60,15 +63,17 @@ class BD
     
                 // Validar la contraseña usando password_verify
                 if (password_verify($password, $passwordHash)) {
-                    return "Usuario autenticado con éxito";
+                    return true;
                 } else {
-                    return "Contraseña incorrecta";
+                    return false;
                 }
             } else {
-                return "El usuario no existe";
+                return false;
             }
         } catch (PDOException $e) {
             throw new Exception("Error al validar usuario: " . $e->getMessage());
+        } finally{
+            self::CerrarConexion();
         }
     }
 }
