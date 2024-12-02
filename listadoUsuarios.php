@@ -5,6 +5,7 @@ $usuarios = BD::getListaUsuarios();
 if(isset($_GET["usuario_nombre"])){
     $usuario = $_GET["usuario_nombre"];
     BD::borrarUsuario($usuario);
+    header("Refresh:0");
 }
 var_dump($usuarios);
 ?>
@@ -36,6 +37,12 @@ var_dump($usuarios);
             </tr>
         <?php endforeach; ?>
     </table>
+    <form action="index.php" method="post">
+            <button type="submit">Volver al inicio</button>
+    </form>
+    <form action="pagAdmin.php" method="post">
+            <button type="submit">Volver atrás</button>
+    </form>
 
 </body>
 

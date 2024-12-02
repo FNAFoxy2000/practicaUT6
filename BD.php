@@ -148,4 +148,60 @@ class BD
             self::CerrarConexion();
         }
     }
+
+    public static function getListaComponentes(){
+        try {
+            //Consulta con un param
+            $componentes = [];
+            $sql1 = "SELECT * FROM caja";
+            $sql2 = "SELECT * FROM disco_duro";
+            $sql3 = "SELECT * FROM marca";
+            $sql4 = "SELECT * FROM placa_base";
+            $sql5 = "SELECT * FROM procesador";
+            $sql6 = "SELECT * FROM ram";
+            $sql7 = "SELECT * FROM tarjeta_grafica";
+            
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql1);
+            $stmt->execute();
+            
+            //Recuperar los datos
+            $caja = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($caja) {
+                $componentes[] = $caja;
+            } else {
+                throw new PDOException("Error al leer tabla caja");
+            }
+             //Recuperar los datos
+             $disco_duro = $stmt->fetchAll(PDO::FETCH_ASSOC);
+             if ($disco_duro) {
+                 $componentes[] = $disco_duro;
+             } else {
+                throw new PDOException("Error al leer tabla disco_duro");
+             }
+        } catch (PDOException $e) {
+            throw new Exception("Error al obtener los componentes: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
+    
+    public static function getOrdenador($usuario_id){
+        try{
+            $sql = "SELECT * FROM ordenador WHERE usuario_id = :usuario_id";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $ordenador = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if($ordenador){
+                return $ordenador;
+            }else {
+                throw new PDOException("No encontró ningún ordenador para ese usuario");
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al obtener el ordenador: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
 }
