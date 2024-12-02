@@ -40,10 +40,14 @@ class BD
             $stmt->bindParam(':password', $passwordCifrada);
             $stmt->bindParam(':email', $email);
             $stmt->execute();
-
             
             // Crear ordenador para el usuario
-            $sql = "INSERT INTO ordenador ()";
+            $usuario_id = BD::getUsuarioId($usuario);
+            $sql = "INSERT INTO ordenador (usuario_id) VALUES (:usuario_id)";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':usuario_id', $usuario_id);
+            $stmt->execute();
 
             return true;
         } catch (PDOException $e) {
@@ -245,7 +249,7 @@ class BD
     public static function getUsuarioId($usuario){
         try {
             //Consulta con un param
-            $sql = "SELECT usuario_id FROM usuario WHERE usuario_nombre = :usuario_nombre ";
+            $sql = "SELECT usuario_id FROM usuario WHERE usuario_nombre = :usuario_nombre LIMIT 1";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':usuario_nombre', $usuario);
@@ -254,7 +258,7 @@ class BD
             //Recuperar los datos
             $id = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($id) {
-                return $id;
+                return $id["usuario_id"];
             } else {
                 echo "No se han encontrado usuarios";
             }
