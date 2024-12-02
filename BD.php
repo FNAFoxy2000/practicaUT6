@@ -103,4 +103,49 @@ class BD
             self::CerrarConexion();
         }
     }
+
+    public static function getListaUsuarios(){
+        try {
+            //Consulta con un param
+            $sql = "SELECT * FROM usuario";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            
+            //Recuperar los datos
+            $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($usuarios) {
+                var_dump($usuarios);
+                return $usuarios;
+            } else {
+                echo "No se han encontrado usuarios";
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al leer usuario: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
+
+    public static function borrarUsuario($usuario):bool{
+        try {
+            //Consulta con un param
+            $sql = "DELETE FROM usuario WHERE usuario_nombre = :usuario_nombre";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':usuario_nombre', $usuario);
+            $stmt->execute();
+            $lineas = $stmt->rowCount();
+            //Recuperar los datos
+            if ($lineas) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al leer usuario: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
 }
