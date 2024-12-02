@@ -31,6 +31,7 @@ class BD
     public static function RegistrarUsuario($usuario, $password, $email): bool
     {
         try {
+            // Crear usuario
             $sql = "INSERT INTO usuario (usuario_nombre, password, email) VALUES (:usuario, :password, :email)";
             $passwordCifrada = password_hash($password, PASSWORD_DEFAULT); // Hasheamos el password
             $conn = self::Conectar();
@@ -39,6 +40,11 @@ class BD
             $stmt->bindParam(':password', $passwordCifrada);
             $stmt->bindParam(':email', $email);
             $stmt->execute();
+
+            
+            // Crear ordenador para el usuario
+            $sql = "INSERT INTO ordenador ()";
+
             return true;
         } catch (PDOException $e) {
             throw new Exception("Error al registrar usuario: " . $e->getMessage());
@@ -115,13 +121,12 @@ class BD
             //Recuperar los datos
             $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if ($usuarios) {
-                var_dump($usuarios);
                 return $usuarios;
             } else {
-                echo "No se han encontrado usuarios";
+                throw new PDOException("No se encontró ningún usuario");
             }
         } catch (PDOException $e) {
-            throw new Exception("Error al leer usuario: " . $e->getMessage());
+            throw new Exception("Error al obtener usuarios: " . $e->getMessage());
         } finally {
             self::CerrarConexion();
         }
@@ -140,10 +145,10 @@ class BD
             if ($lineas) {
                 return true;
             } else {
-                return false;
+                throw new PDOException("No se encontró ningún usuario");
             }
         } catch (PDOException $e) {
-            throw new Exception("Error al leer usuario: " . $e->getMessage());
+            throw new Exception("Error al borrar usuario: " . $e->getMessage());
         } finally {
             self::CerrarConexion();
         }
@@ -188,7 +193,7 @@ class BD
     
     public static function getOrdenador($usuario_id){
         try{
-            $sql = "SELECT * FROM ordenador WHERE usuario_id = :usuario_id";
+            $sql = "SELECT * FROM ordenador WHERE usuario_id = :usuario_id LIMIT 1";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
             $stmt->execute();

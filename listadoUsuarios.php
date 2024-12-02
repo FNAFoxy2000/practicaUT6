@@ -1,13 +1,15 @@
 <?php
 require_once "BD.php";
-BD::Conectar();
-$usuarios = BD::getListaUsuarios();
-if(isset($_GET["usuario_nombre"])){
+// Si recibe el usuario_nombre en el get significa que quiere eliminarlo
+if (isset($_GET["usuario_nombre"])) {
     $usuario = $_GET["usuario_nombre"];
     BD::borrarUsuario($usuario);
     header("Refresh:0");
 }
-var_dump($usuarios);
+
+// Cargar tabla usuarios
+$usuarios = BD::getListaUsuarios();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,10 +19,11 @@ var_dump($usuarios);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        table{
-            border: 2px solid black;
+        table {
+            border-collapse: collapse;
         }
-        td{
+
+        td {
             border: 2px solid black;
         }
     </style>
@@ -28,20 +31,26 @@ var_dump($usuarios);
 
 <body>
     <table>
+        <thead>
+            <td>Usuario</td>
+            <td>Email</td>
+            <td>Es admin</td>
+            <td>Eliminar</td>
+        </thead>
         <?php foreach ($usuarios as $u): ?>
             <tr>
                 <td><?= $u["usuario_nombre"] ?></td>
                 <td><?= $u["email"] ?></td>
                 <td><?= $u["admin"] ?></td>
-                <td><a href="listadoUsuarios.php?usuario_nombre=<?= $u["usuario_nombre"]?>">Eliminar</td>
+                <td><a href="listadoUsuarios.php?usuario_nombre=<?= $u["usuario_nombre"] ?>">Eliminar</td>
             </tr>
         <?php endforeach; ?>
     </table>
     <form action="index.php" method="post">
-            <button type="submit">Volver al inicio</button>
+        <button type="submit">Volver al inicio</button>
     </form>
     <form action="pagAdmin.php" method="post">
-            <button type="submit">Volver atrás</button>
+        <button type="submit">Volver atrás</button>
     </form>
 
 </body>
