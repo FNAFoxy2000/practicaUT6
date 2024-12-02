@@ -4,7 +4,6 @@ require_once "BD.php";
 if (isset($_GET["usuario_nombre"])) {
     $usuario = $_GET["usuario_nombre"];
     BD::borrarUsuario($usuario);
-    header("Refresh:0");
 }
 
 // Cargar tabla usuarios
@@ -35,13 +34,18 @@ $usuarios = BD::getListaUsuarios();
             <td>Usuario</td>
             <td>Email</td>
             <td>Es admin</td>
-            <td>Eliminar</td>
+            
         </thead>
         <?php foreach ($usuarios as $u): ?>
             <tr>
                 <td><?= $u["usuario_nombre"] ?></td>
                 <td><?= $u["email"] ?></td>
-                <td><?= $u["admin"] ?></td>
+                <td><?php if ($u["admin"] == 1) {
+                        echo "SI";
+                    } else {
+                        echo "NO";
+                    }
+                    ?></td>
                 <td><a href="listadoUsuarios.php?usuario_nombre=<?= $u["usuario_nombre"] ?>">Eliminar</td>
             </tr>
         <?php endforeach; ?>

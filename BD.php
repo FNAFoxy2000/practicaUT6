@@ -40,7 +40,7 @@ class BD
             $stmt->bindParam(':password', $passwordCifrada);
             $stmt->bindParam(':email', $email);
             $stmt->execute();
-            
+
             // Crear ordenador para el usuario
             $usuario_id = BD::getUsuarioId($usuario);
             $sql = "INSERT INTO ordenador (usuario_id) VALUES (:usuario_id)";
@@ -102,9 +102,13 @@ class BD
 
             // Verificar si el usuario es admin
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($resultado["admin"] == 1) {
-                return true;
-            } else {
+            if ($resultado) {
+                if ($resultado["admin"] == 1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }else{
                 return false;
             }
         } catch (PDOException $e) {
@@ -114,14 +118,15 @@ class BD
         }
     }
 
-    public static function getListaUsuarios(){
+    public static function getListaUsuarios()
+    {
         try {
             //Consulta con un param
             $sql = "SELECT * FROM usuario";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
             $stmt->execute();
-            
+
             //Recuperar los datos
             $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if ($usuarios) {
@@ -136,7 +141,8 @@ class BD
         }
     }
 
-    public static function borrarUsuario($usuario):bool{
+    public static function borrarUsuario($usuario): bool
+    {
         try {
             //Consulta con un param
             $sql = "DELETE FROM usuario WHERE usuario_nombre = :usuario_nombre";
@@ -158,7 +164,8 @@ class BD
         }
     }
 
-    public static function getListaComponentes(){
+    public static function getListaComponentes()
+    {
         try {
             //Consulta con un param
             $componentes = [];
@@ -169,11 +176,11 @@ class BD
             $sql5 = "SELECT * FROM procesador";
             $sql6 = "SELECT * FROM ram";
             $sql7 = "SELECT * FROM tarjeta_grafica";
-            
+
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql1);
             $stmt->execute();
-            
+
             //Recuperar los datos
             $caja = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if ($caja) {
@@ -181,62 +188,62 @@ class BD
             } else {
                 throw new PDOException("Error al leer tabla caja");
             }
-             //Recuperar los datos
-             $disco_duro = $stmt->fetchAll(PDO::FETCH_ASSOC);
-             if ($disco_duro) {
-                 $componentes[] = $disco_duro;
-             } else {
+            //Recuperar los datos
+            $disco_duro = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($disco_duro) {
+                $componentes[] = $disco_duro;
+            } else {
                 throw new PDOException("Error al leer tabla disco_duro");
-             }
-             //Recuperar los datos
-             $placa_base = $stmt->fetchAll(PDO::FETCH_ASSOC);
-             if ($placa_base) {
-                 $componentes[] = $placa_base;
-             } else {
+            }
+            //Recuperar los datos
+            $placa_base = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($placa_base) {
+                $componentes[] = $placa_base;
+            } else {
                 throw new PDOException("Error al leer tabla placa_base");
-             }
-              //Recuperar los datos
-              $procesador = $stmt->fetchAll(PDO::FETCH_ASSOC);
-              if ($procesador) {
-                  $componentes[] = $procesador;
-              } else {
-                 throw new PDOException("Error al leer tabla procesador");
-              }
+            }
+            //Recuperar los datos
+            $procesador = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($procesador) {
+                $componentes[] = $procesador;
+            } else {
+                throw new PDOException("Error al leer tabla procesador");
+            }
 
-              //Recuperar los datos
-              $ram = $stmt->fetchAll(PDO::FETCH_ASSOC);
-              if ($ram) {
-                  $componentes[] = $ram;
-              } else {
-                 throw new PDOException("Error al leer tabla ram");
-              }
+            //Recuperar los datos
+            $ram = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($ram) {
+                $componentes[] = $ram;
+            } else {
+                throw new PDOException("Error al leer tabla ram");
+            }
 
-              //Recuperar los datos
-              $tarjeta_grafica = $stmt->fetchAll(PDO::FETCH_ASSOC);
-              if ($tarjeta_grafica) {
-                  $componentes[] = $tarjeta_grafica;
-              } else {
-                 throw new PDOException("Error al leer tabla tarjeta_grafica");
-              }
-
+            //Recuperar los datos
+            $tarjeta_grafica = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($tarjeta_grafica) {
+                $componentes[] = $tarjeta_grafica;
+            } else {
+                throw new PDOException("Error al leer tabla tarjeta_grafica");
+            }
         } catch (PDOException $e) {
             throw new Exception("Error al obtener los componentes: " . $e->getMessage());
         } finally {
             self::CerrarConexion();
         }
     }
-    
-    public static function getOrdenador($usuario_id){
-        try{
+
+    public static function getOrdenador($usuario_id)
+    {
+        try {
             $sql = "SELECT * FROM ordenador WHERE usuario_id = :usuario_id LIMIT 1";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':usuario_id', $usuario_id);
             $stmt->execute();
             $ordenador = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if($ordenador){
+            if ($ordenador) {
                 return $ordenador;
-            }else {
+            } else {
                 throw new PDOException("No encontró ningún ordenador para ese usuario");
             }
         } catch (PDOException $e) {
@@ -246,7 +253,8 @@ class BD
         }
     }
 
-    public static function getUsuarioId($usuario){
+    public static function getUsuarioId($usuario)
+    {
         try {
             //Consulta con un param
             $sql = "SELECT usuario_id FROM usuario WHERE usuario_nombre = :usuario_nombre LIMIT 1";
@@ -254,13 +262,13 @@ class BD
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':usuario_nombre', $usuario);
             $stmt->execute();
-            
+
             //Recuperar los datos
             $id = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($id) {
                 return $id["usuario_id"];
             } else {
-                echo "No se han encontrado usuarios";
+                throw new PDOException("No se han encontrado usuarios");
             }
         } catch (PDOException $e) {
             throw new Exception("Error al leer usuario: " . $e->getMessage());
