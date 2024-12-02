@@ -1,5 +1,10 @@
 <?php
+session_start();
+require_once "BD.php";
+$usuario = $_SESSION["usuario"];
+$usuario_id = (int)BD::getUsuarioId($usuario);
 
+$ordenador = BD::getOrdenador($usuario_id);
 ?>
 <table>
     <th>
@@ -10,5 +15,5 @@
         <tr>RAM</tr>
         <tr>Tarjeta Gráfica</tr>
     </th>
-    
+
 </table>

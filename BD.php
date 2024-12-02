@@ -184,6 +184,37 @@ class BD
              } else {
                 throw new PDOException("Error al leer tabla disco_duro");
              }
+             //Recuperar los datos
+             $placa_base = $stmt->fetchAll(PDO::FETCH_ASSOC);
+             if ($placa_base) {
+                 $componentes[] = $placa_base;
+             } else {
+                throw new PDOException("Error al leer tabla placa_base");
+             }
+              //Recuperar los datos
+              $procesador = $stmt->fetchAll(PDO::FETCH_ASSOC);
+              if ($procesador) {
+                  $componentes[] = $procesador;
+              } else {
+                 throw new PDOException("Error al leer tabla procesador");
+              }
+
+              //Recuperar los datos
+              $ram = $stmt->fetchAll(PDO::FETCH_ASSOC);
+              if ($ram) {
+                  $componentes[] = $ram;
+              } else {
+                 throw new PDOException("Error al leer tabla ram");
+              }
+
+              //Recuperar los datos
+              $tarjeta_grafica = $stmt->fetchAll(PDO::FETCH_ASSOC);
+              if ($tarjeta_grafica) {
+                  $componentes[] = $tarjeta_grafica;
+              } else {
+                 throw new PDOException("Error al leer tabla tarjeta_grafica");
+              }
+
         } catch (PDOException $e) {
             throw new Exception("Error al obtener los componentes: " . $e->getMessage());
         } finally {
@@ -196,6 +227,7 @@ class BD
             $sql = "SELECT * FROM ordenador WHERE usuario_id = :usuario_id LIMIT 1";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':usuario_id', $usuario_id);
             $stmt->execute();
             $ordenador = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if($ordenador){
@@ -205,6 +237,29 @@ class BD
             }
         } catch (PDOException $e) {
             throw new Exception("Error al obtener el ordenador: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
+
+    public static function getUsuarioId($usuario){
+        try {
+            //Consulta con un param
+            $sql = "SELECT usuario_id FROM usuario WHERE usuario_nombre = :usuario_nombre ";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':usuario_nombre', $usuario);
+            $stmt->execute();
+            
+            //Recuperar los datos
+            $id = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($id) {
+                return $id;
+            } else {
+                echo "No se han encontrado usuarios";
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al leer usuario: " . $e->getMessage());
         } finally {
             self::CerrarConexion();
         }
