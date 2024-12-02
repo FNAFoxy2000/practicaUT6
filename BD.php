@@ -237,7 +237,7 @@ class BD
         }
     }
 
-    public static function getId($usuario){
+    public static function getUsuarioId($usuario){
         try {
             //Consulta con un param
             $sql = "SELECT usuario_id FROM usuario WHERE usuario_nombre = :usuario_nombre ";

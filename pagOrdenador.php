@@ -2,7 +2,7 @@
 session_start();
 require_once "BD.php";
 $usuario = $_SESSION["usuario"];
-$usuario_id = (int)BD::getId($usuario);
+$usuario_id = (int)BD::getUsuarioId($usuario);
 
 $ordenador = BD::getOrdenador($usuario_id);
 ?>
