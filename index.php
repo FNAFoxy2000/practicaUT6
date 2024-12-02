@@ -2,7 +2,7 @@
 require_once "BD.php";
 session_start();
 
-if(isset($_POST["cerrarSesion"])){
+if (isset($_POST["cerrarSesion"])) {
     session_unset();
     session_destroy();
     echo "Sesión cerrada";
@@ -55,13 +55,13 @@ if (!isset($_SESSION["usuario"])) {
         <form action="pagAdmin.php" method="POST">
             <button type="submit">Administrar</button>
         </form>
-<?php
+    <?php
     }
     ?>
     <form action="index.php" method="POST">
-            <button type="submit" name="cerrarSesion">Cerrar Sesion</button>
-        </form>
-    <?php
+        <button type="submit" name="cerrarSesion">Cerrar Sesion</button>
+    </form>
+<?php
 }
 
 
