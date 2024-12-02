@@ -84,7 +84,7 @@ class BD
     {
         try {
             // Crear la consulta SQL
-            $sql = "SELECT admin FROM usuario WHERE usuario_nombre = :usuario";
+            $sql = "SELECT admin FROM usuario WHERE usuario_nombre = :usuario LIMIT 1";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':usuario', $usuario);
@@ -92,7 +92,7 @@ class BD
 
             // Verificar si el usuario es admin
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($resultado == true) {
+            if ($resultado["admin"] == 1) {
                 return true;
             } else {
                 return false;

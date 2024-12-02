@@ -2,6 +2,11 @@
 require_once "BD.php";
 session_start();
 
+if(isset($_POST["cerrarSesion"])){
+    session_unset();
+    session_destroy();
+    echo "Sesión cerrada";
+}
 
 // Si tiene email significa que está registrandose  
 if (isset($_POST["email"]) && isset($_POST["usuario"]) && isset($_POST["password"])) {
@@ -54,7 +59,7 @@ if (!isset($_SESSION["usuario"])) {
     }
     ?>
     <form action="index.php" method="POST">
-            <button type="submit">Cerrar Sesion</button>
+            <button type="submit" name="cerrarSesion">Cerrar Sesion</button>
         </form>
     <?php
 }
