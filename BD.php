@@ -268,4 +268,25 @@ class BD
             self::CerrarConexion();
         }
     }
+
+    public static function getTablaComponente($nombre_tabla){
+        try{
+            $sql = "SELECT * FROM $nombre_tabla";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            //Recuperar los datos
+            $componentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($componentes) {
+                return $componentes;
+            } else {
+                echo "No se han encontrado componentes";
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al obtener tabla: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
+
 }

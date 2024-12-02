@@ -6,14 +6,54 @@ $usuario_id = (int)BD::getUsuarioId($usuario);
 
 $ordenador = BD::getOrdenador($usuario_id);
 ?>
-<table>
-    <th>
-        <tr>Caja</tr>
-        <tr>Disco duro</tr>
-        <tr>Placa Base</tr>
-        <tr>Procesador</tr>
-        <tr>RAM</tr>
-        <tr>Tarjeta Gráfica</tr>
-    </th>
+<!DOCTYPE html>
+<html lang="en">
 
-</table>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuracion ordenador</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td {
+            border: 2px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <th>
+        <td>Ordenador</td>
+        </th>
+
+        <tr>
+            <td>Disco Duro</td>
+            <td></td>
+            <td><a href="seleccionarComponente.php?componente=disco_duro">Seleccionar</td>
+        </tr>
+        <tr>
+            <td>Placa base</td>
+            <td></td>
+            <td><a href="seleccionarComponente.php?componente=placa_base">Seleccionar</td>
+        </tr>
+        <tr>
+            <td>Procesador</td>
+            <td></td>
+            <td><a href="seleccionarComponente.php?componente=procesador">Seleccionar</td>
+        </tr>
+        <tr>
+            <td>RAM</td>
+            <td></td>
+            <td><a href="seleccionarComponente.php?componente=ram">Seleccionar</td>
+        </tr>
+        <tr>
+            <td>Tarjeta Gráfica</td>
+            <td></td>
+            <td><a href="seleccionarComponente.php?componente=tarjeta_grafica">Seleccionar</td>
+        </tr>
+    </table>
+</body>
