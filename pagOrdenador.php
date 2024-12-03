@@ -4,8 +4,8 @@ require_once "BD.php";
 $usuario = $_SESSION["usuario"];
 $usuario_id = (int)BD::getUsuarioId($usuario);
 
-if(isset($_GET["tipo_componente"]) && isset($_GET["id_componente"])){
-    BD::agregarComponenteOrdenador($usuario_id, $_GET["tipo_componente"], $_GET["id_componente"]);
+if(isset($_GET["tipo_componente"]) && isset($_GET["componente_id"])){
+    BD::agregarComponenteOrdenador($usuario_id, $_GET["tipo_componente"], $_GET["componente_id"]);
 }
 
 $ordenador = BD::getOrdenador($usuario_id);

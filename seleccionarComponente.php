@@ -38,7 +38,7 @@
                         <td><?= $c["placa_precio"] ?> €</td>
                         <td></td>
 
-                        <td><a href="listadoUsuarios.php?usuario_nombre=<?= $u["usuario_nombre"] ?>">Eliminar</td>
+                        <td><a href="listadoUsuarios.php?tipo_componente=<?= $nombre_tabla ?>&componente_id=<?= $c["placa_id"] ?>">Seleccionar</td>
                     </tr>
                 <?php endforeach; ?>
             </table>
