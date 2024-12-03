@@ -108,7 +108,7 @@ class BD
                 } else {
                     return false;
                 }
-            }else{
+            } else {
                 return false;
             }
         } catch (PDOException $e) {
@@ -164,7 +164,7 @@ class BD
         }
     }
 
-    public static function getListaComponentes()
+    /* public static function getListaComponentes()
     {
         try {
             //Consulta con un param
@@ -230,7 +230,7 @@ class BD
         } finally {
             self::CerrarConexion();
         }
-    }
+    } */
 
     public static function getOrdenador($usuario_id)
     {
@@ -243,6 +243,27 @@ class BD
             $ordenador = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if ($ordenador) {
                 return $ordenador;
+            } else {
+                throw new PDOException("No encontró ningún ordenador para ese usuario");
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al obtener el ordenador: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
+
+    public static function getComponentesOrdenador($usuario_id)
+    {
+        try {
+            $sql = "SELECT placa_id, caja_id, proc_id, grafica_id, ram_id, discoDuro_id FROM ordenador WHERE usuario_id = :usuario_id LIMIT 1";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':usuario_id', $usuario_id);
+            $stmt->execute();
+            $ordenador = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($ordenador) {
+                return $ordenador[0];
             } else {
                 throw new PDOException("No encontró ningún ordenador para ese usuario");
             }
@@ -277,8 +298,9 @@ class BD
         }
     }
 
-    public static function getTablaComponente($nombre_tabla){
-        try{
+    public static function getTablaComponente($nombre_tabla)
+    {
+        try {
             $sql = "SELECT * FROM $nombre_tabla";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
@@ -297,11 +319,12 @@ class BD
         }
     }
 
-    
+
 
     // Añadir componente al ordenador
-    public static function agregarComponenteOrdenador($usuario_id, $tipo_componente, $componente_id){
-        try{
+    public static function agregarComponenteOrdenador($usuario_id, $tipo_componente, $componente_id)
+    {
+        try {
             $sql = "UPDATE ORDENADOR SET $tipo_componente = :componente_id WHERE usuario_id = :usuario_id";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
@@ -323,4 +346,33 @@ class BD
         }
     }
 
+
+    // Obtener nombre segun id
+    public static function obtenerNombrePorId($nombreTablaComponente, $tipo_componente, $componente_id)
+    {
+        $nombreComponente = $tipo_componente . "_nombre";
+        $idComponente = $tipo_componente . "_id";
+        if ($componente_id != null) {
+            try {
+                $sql = "SELECT $nombreComponente FROM $nombreTablaComponente WHERE $idComponente = $componente_id";
+                $conn = self::Conectar();
+                $stmt = $conn->prepare($sql);
+                // $stmt->bindParam(':tipo_componente', $tipo_componente);
+                $stmt->execute();
+                //Recuperar los datos
+                $componente_nombre = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($componente_nombre) {
+                    return $componente_nombre[$nombreComponente];
+                } else {
+                    throw new PDOException("No se encontró ningun componente con ese id");
+                }
+            } catch (PDOException $e) {
+                throw new Exception("Error al obtener tabla: " . $e->getMessage());
+            } finally {
+                self::CerrarConexion();
+            }
+        }else{
+            return "";
+        }
+    }
 }
