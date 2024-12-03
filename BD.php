@@ -297,4 +297,6 @@ class BD
         }
     }
 
+    //REVISAR TABLA RAM!!
+
 }

@@ -29,16 +29,20 @@ $ordenador = BD::getOrdenador($usuario_id);
         <th>
         <td>Ordenador</td>
         </th>
-
-        <tr>
-            <td>Disco Duro</td>
-            <td></td>
-            <td><a href="seleccionarComponente.php?componente=disco_duro">Seleccionar</td>
-        </tr>
         <tr>
             <td>Placa base</td>
             <td></td>
             <td><a href="seleccionarComponente.php?componente=placa_base">Seleccionar</td>
+        </tr>
+        <tr>
+            <td>Caja</td>
+            <td></td>
+            <td><a href="seleccionarComponente.php?componente=caja">Seleccionar</td>
+        </tr>
+        <tr>
+            <td>Disco Duro</td>
+            <td></td>
+            <td><a href="seleccionarComponente.php?componente=disco_duro">Seleccionar</td>
         </tr>
         <tr>
             <td>Procesador</td>
