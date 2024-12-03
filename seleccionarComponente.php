@@ -38,7 +38,7 @@
                         <td><?= $c["placa_precio"] ?> €</td>
                         <td></td>
 
-                        <td><a href="listadoUsuarios.php?tipo_componente=<?= $nombre_tabla ?>&componente_id=<?= $c["placa_id"] ?>">Seleccionar</td>
+                        <td><a href="pagOrdenador.php?tipo_componente=placa_id&componente_id=<?= $c["placa_id"] ?>">Seleccionar</td>
                     </tr>
                 <?php endforeach; ?>
             </table>
