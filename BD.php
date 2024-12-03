@@ -299,4 +299,28 @@ class BD
 
     
 
+    // Añadir componente al ordenador
+    public static function agregarComponenteOrdenador($usuario_id, $tipo_componente, $componente_id){
+        try{
+            $sql = "UPDATE TABLE ORDENADOR (:tipo_componente) VALUES (:componente_id) WHERE usuario_id = :usuario_id";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':tipo_componente', $tipo_componente);
+            $stmt->bindParam(':componente_id', $componente_id);
+            $stmt->bindParam(':usuario_id', $usuario_id);
+            $stmt->execute();
+            //Recuperar los datos
+            $lineas = $stmt->rowCount();
+            if ($lineas > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al obtener tabla: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
+
 }

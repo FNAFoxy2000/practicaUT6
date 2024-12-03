@@ -40,12 +40,7 @@ $usuarios = BD::getListaUsuarios();
             <tr>
                 <td><?= $u["usuario_nombre"] ?></td>
                 <td><?= $u["email"] ?></td>
-                <td><?php if ($u["admin"] == 1) {
-                        echo "SI";
-                    } else {
-                        echo "NO";
-                    }
-                    ?></td>
+                <td><?= $u["admin"] ? "SI" : "NO" ?></td>
                 <td><a href="listadoUsuarios.php?usuario_nombre=<?= $u["usuario_nombre"] ?>">Eliminar</td>
             </tr>
         <?php endforeach; ?>
