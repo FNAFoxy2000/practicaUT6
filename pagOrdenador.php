@@ -4,11 +4,15 @@ require_once "BD.php";
 $usuario = $_SESSION["usuario"];
 $usuario_id = (int)BD::getUsuarioId($usuario);
 
+// Si recibe GET significa que ha seleccionado un componente
 if(isset($_GET["tipo_componente"]) && isset($_GET["componente_id"])){
     BD::agregarComponenteOrdenador($usuario_id, $_GET["tipo_componente"], $_GET["componente_id"]);
 }
 
-$ordenador = BD::getOrdenador($usuario_id);
+$ordenador = BD::getComponentesOrdenador($usuario_id);
+var_dump($ordenador);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,32 +39,32 @@ $ordenador = BD::getOrdenador($usuario_id);
         </th>
         <tr>
             <td>Placa base</td>
-            <td></td>
+            <td><?= $ordenador["placa_id"] ?></td>
             <td><a href="seleccionarComponente.php?componente=placa_base">Seleccionar</td>
         </tr>
         <tr>
             <td>Caja</td>
-            <td></td>
+            <td><?= $ordenador[1] ?></td>
             <td><a href="seleccionarComponente.php?componente=caja">Seleccionar</td>
         </tr>
         <tr>
             <td>Disco Duro</td>
-            <td></td>
+            <td><?= $ordenador[2] ?></td>
             <td><a href="seleccionarComponente.php?componente=disco_duro">Seleccionar</td>
         </tr>
         <tr>
             <td>Procesador</td>
-            <td></td>
+            <td><?= $ordenador[3] ?></td>
             <td><a href="seleccionarComponente.php?componente=procesador">Seleccionar</td>
         </tr>
         <tr>
             <td>RAM</td>
-            <td></td>
+            <td><?= $ordenador[4] ?></td>
             <td><a href="seleccionarComponente.php?componente=ram">Seleccionar</td>
         </tr>
         <tr>
             <td>Tarjeta Gráfica</td>
-            <td></td>
+            <td><?= $ordenador[5] ?></td>
             <td><a href="seleccionarComponente.php?componente=tarjeta_grafica">Seleccionar</td>
         </tr>
     </table>
