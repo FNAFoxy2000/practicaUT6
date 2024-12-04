@@ -310,12 +310,13 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
             </form>
         </table>
     </div>
-    <br>
-    <form action="index.php" method="post">
-        <button type="submit">Volver al inicio</button>
-    </form>
+
     <br>
     <form action="pagAdmin.php" method="post">
         <button type="submit">Volver atrás</button>
+    </form>
+    <br>
+    <form action="index.php" method="post">
+        <button type="submit">Volver al inicio</button>
     </form>
 </body>

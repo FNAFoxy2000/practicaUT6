@@ -45,11 +45,13 @@ $usuarios = BD::getListaUsuarios();
             </tr>
         <?php endforeach; ?>
     </table>
-    <form action="index.php" method="post">
-        <button type="submit">Volver al inicio</button>
-    </form>
+    <br>
     <form action="pagAdmin.php" method="post">
         <button type="submit">Volver atrás</button>
+    </form>
+    <br>
+    <form action="index.php" method="post">
+        <button type="submit">Volver al inicio</button>
     </form>
 
 </body>
