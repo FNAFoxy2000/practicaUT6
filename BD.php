@@ -28,7 +28,7 @@ class BD
     }
 
     // REGISTRAR
-    public static function RegistrarUsuario($usuario, $password, $email): bool
+    public static function RegistrarUsuario($usuario, $password, $email)
     {
         try {
             // Crear usuario
@@ -58,7 +58,7 @@ class BD
     }
 
     // INICIAR SESION
-    public static function Login($usuario, $password): bool
+    public static function Login($usuario, $password)
     {
         try {
             // Crear la consulta SQL
@@ -90,7 +90,7 @@ class BD
     }
 
     // Comprobar si el usuario es admin
-    public static function esAdmin($usuario): bool
+    public static function esAdmin($usuario)
     {
         try {
             // Crear la consulta SQL
@@ -141,7 +141,7 @@ class BD
         }
     }
 
-    public static function borrarUsuario($usuario): bool
+    public static function borrarUsuario($usuario)
     {
         try {
             //Consulta con un param
@@ -163,74 +163,6 @@ class BD
             self::CerrarConexion();
         }
     }
-
-    /* public static function getListaComponentes()
-    {
-        try {
-            //Consulta con un param
-            $componentes = [];
-            $sql1 = "SELECT * FROM caja";
-            $sql2 = "SELECT * FROM disco_duro";
-            $sql3 = "SELECT * FROM marca";
-            $sql4 = "SELECT * FROM placa_base";
-            $sql5 = "SELECT * FROM procesador";
-            $sql6 = "SELECT * FROM ram";
-            $sql7 = "SELECT * FROM tarjeta_grafica";
-
-            $conn = self::Conectar();
-            $stmt = $conn->prepare($sql1);
-            $stmt->execute();
-
-            //Recuperar los datos
-            $caja = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if ($caja) {
-                $componentes[] = $caja;
-            } else {
-                throw new PDOException("Error al leer tabla caja");
-            }
-            //Recuperar los datos
-            $disco_duro = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if ($disco_duro) {
-                $componentes[] = $disco_duro;
-            } else {
-                throw new PDOException("Error al leer tabla disco_duro");
-            }
-            //Recuperar los datos
-            $placa_base = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if ($placa_base) {
-                $componentes[] = $placa_base;
-            } else {
-                throw new PDOException("Error al leer tabla placa_base");
-            }
-            //Recuperar los datos
-            $procesador = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if ($procesador) {
-                $componentes[] = $procesador;
-            } else {
-                throw new PDOException("Error al leer tabla procesador");
-            }
-
-            //Recuperar los datos
-            $ram = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if ($ram) {
-                $componentes[] = $ram;
-            } else {
-                throw new PDOException("Error al leer tabla ram");
-            }
-
-            //Recuperar los datos
-            $tarjeta_grafica = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if ($tarjeta_grafica) {
-                $componentes[] = $tarjeta_grafica;
-            } else {
-                throw new PDOException("Error al leer tabla tarjeta_grafica");
-            }
-        } catch (PDOException $e) {
-            throw new Exception("Error al obtener los componentes: " . $e->getMessage());
-        } finally {
-            self::CerrarConexion();
-        }
-    } */
 
     public static function getOrdenador($usuario_id)
     {
@@ -403,11 +335,11 @@ class BD
         }
     } */
 
-    public static function borrarComponente($nombre_tabla, $tipo_componente,$id): bool
+    public static function borrarComponente($nombre_tabla, $tipo_componente, $id)
     {
         try {
             //Consulta con un param
-            $sql = "DELETE FROM $nombre_tabla WHERE $tipo_componente = :id" ;
+            $sql = "DELETE FROM $nombre_tabla WHERE $tipo_componente = :id";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':id', $id);
@@ -425,4 +357,191 @@ class BD
             self::CerrarConexion();
         }
     }
+
+
+    #region AÑADIR PRODUCTOS (ADMIN)
+
+    public static function anadirCaja($caja_nombre, $caja_precio, $marca_id)
+    {
+        try {
+            //Consulta con un param
+            $sql = "INSERT INTO caja (caja_nombre, caja_precio, marca_id) VALUES (:caja_nombre, :caja_precio, :marca_id)";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':caja_nombre', $caja_nombre);
+            $stmt->bindParam(':caja_precio', $caja_precio);
+            $stmt->bindParam(':marca_id', $marca_id);
+            $stmt->execute();
+            $lineas = $stmt->rowCount();
+            //Recuperar los datos
+            if ($lineas) {
+                return true;
+            } else {
+                throw new PDOException("No se agregó ninguna caja");
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al agregar caja: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
+
+    public static function anadirdiscoDuro($discoDuro_nombre, $capacidad, $tipo, $discoDuro_precio, $marca_id)
+    {
+        try {
+            //Consulta con un param
+            $sql = "INSERT INTO disco_duro (discoDuro_nombre, capacidad, tipo, discoDuro_precio, marca_id) ";
+            $sql .= "VALUES (:discoDuro_nombre, :capacidad, :tipo, :discoDuro_precio, :marca_id)";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':discoDuro_nombre', $discoDuro_nombre);
+            $stmt->bindParam(':capacidad', $capacidad);
+            $stmt->bindParam(':tipo', $tipo);
+            $stmt->bindParam(':discoDuro_precio', $discoDuro_precio);
+            $stmt->bindParam(':marca_id', $marca_id);
+            $stmt->execute();
+            $lineas = $stmt->rowCount();
+            //Recuperar los datos
+            if ($lineas) {
+                return true;
+            } else {
+                throw new PDOException("No se agregó ningún disco duro");
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al agregar disco duro: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
+
+    public static function anadirMarca($marca_nombre)
+    {
+        try {
+            //Consulta con un param
+            $sql = "INSERT INTO marca (marca_nombre) VALUES (:marca_nombre)";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':marca_nombre', $marca_nombre);
+            $stmt->execute();
+            $lineas = $stmt->rowCount();
+            //Recuperar los datos
+            if ($lineas) {
+                return true;
+            } else {
+                throw new PDOException("No se agregó ninguna marca");
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al agregar marca: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
+
+    public static function anadirPlacaBase($placa_nombre, $placa_precio, $marca_id)
+    {
+        try {
+            //Consulta con un param
+            $sql = "INSERT INTO placa (placa_nombre, placa_precio, marca_id) VALUES (:placa_nombre, :placa_precio, :marca_id)";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':placa_nombre', $placa_nombre);
+            $stmt->bindParam(':placa_precio', $placa_precio);
+            $stmt->bindParam(':marca_id', $marca_id);
+            $stmt->execute();
+            $lineas = $stmt->rowCount();
+            //Recuperar los datos
+            if ($lineas) {
+                return true;
+            } else {
+                throw new PDOException("No se agregó ninguna placa");
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al agregar placa: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
+
+    public static function anadirProcesador($proc_nombre, $gHz, $nucleos, $proc_precio, $marca_id)
+    {
+        try {
+            //Consulta con un param
+            $sql = "INSERT INTO proc (proc_nombre, gHz, nucleos, proc_precio, marca_id) VALUES (:proc_nombre, :gHz, :nucleos, :proc_precio, :marca_id)";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':proc_nombre', $proc_nombre);
+            $stmt->bindParam(':gHz', $gHz);
+            $stmt->bindParam(':nucleos', $nucleos);
+            $stmt->bindParam(':proc_precio', $proc_precio);
+            $stmt->bindParam(':marca_id', $marca_id);
+            $stmt->execute();
+            $lineas = $stmt->rowCount();
+            //Recuperar los datos
+            if ($lineas) {
+                return true;
+            } else {
+                throw new PDOException("No se agregó ningún procesador");
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al agregar procesador: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
+
+    public static function anadirRam($ram_nombre, $ram_gb, $ram_mhz, $ram_precio, $marca_id)
+    {
+        try {
+            //Consulta con un param
+            $sql = "INSERT INTO ram (ram_nombre, ram_gb, ram_mhz, ram_precio, marca_id) VALUES (:ram_nombre,  :ram_gb, :ram_mhz, :ram_precio, :marca_id)";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':ram_nombre', $ram_nombre);
+            $stmt->bindParam(':ram_gb', $ram_gb);
+            $stmt->bindParam(':ram_mhz', $ram_mhz);
+            $stmt->bindParam(':ram_precio', $ram_precio);
+            $stmt->bindParam(':marca_id', $marca_id);
+            $stmt->execute();
+            $lineas = $stmt->rowCount();
+            //Recuperar los datos
+            if ($lineas) {
+                return true;
+            } else {
+                throw new PDOException("No se agregó ninguna ram");
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al agregar ram: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
+
+    public static function anadirGrafica($grafica_nombre, $grafica_Gb, $rtx, $grafica_precio, $marca_id)
+    {
+        try {
+            //Consulta con un param
+            $sql = "INSERT INTO tarjeta_grafica (grafica_nombre, grafica_Gb, rtx, grafica_precio, marca_id) VALUES (:grafica_nombre, :grafica_Gb, :rtx, :grafica_precio, :marca_id)";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':grafica_nombre', $grafica_nombre);
+            $stmt->bindParam(':grafica_Gb', $grafica_Gb);
+            $stmt->bindParam(':rtx', $rtx);
+            $stmt->bindParam(':grafica_precio', $grafica_precio);
+            $stmt->bindParam(':marca_id', $marca_id);
+            $stmt->execute();
+            $lineas = $stmt->rowCount();
+            //Recuperar los datos
+            if ($lineas) {
+                return true;
+            } else {
+                throw new PDOException("No se agregó ningúna grafica");
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al agregar grafica: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
+
+    #endregion
 }
