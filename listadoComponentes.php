@@ -28,14 +28,15 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
             border: 2px solid black;
             text-align: center;
         }
+
         .contenedorTablas {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    align-items: flex-start;
-}
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-start;
+        }
     </style>
 </head>
 
@@ -47,6 +48,7 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
     ?>
     <div class="contenedorTablas">
         <table>
+            <form>
             <thead>
                 <th>Nombre</th>
                 <th>Precio</th>
@@ -60,7 +62,14 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
                     <td><a href="listadoComponentes.php?nombre_tabla=placa_base&id=<?= $c["placa_id"] ?>&tipo_componente=placa_id">Eliminar</a></td>
                 </tr>
             <?php endforeach; ?>
+            <tr>
+                <td><input type="text" name="nombre_placa"></td>
+                <td><input type="text" name="precio_placa"></td>
+            </tr>
+            </form>
         </table>
+        <br>
+        
         <?php
         $nombre_tabla = "caja";
         $componentes = BD::getTablaComponente($nombre_tabla);
