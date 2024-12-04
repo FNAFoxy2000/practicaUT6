@@ -28,14 +28,15 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
             border: 2px solid black;
             text-align: center;
         }
+
         .contenedorTablas {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    align-items: flex-start;
-}
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-start;
+        }
     </style>
 </head>
 
@@ -48,6 +49,9 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
     <div class="contenedorTablas">
         <table>
             <thead>
+                <th colspan="3">Placas base</th>
+            </thead>
+            <thead>
                 <th>Nombre</th>
                 <th>Precio</th>
                 <th>Marca</th>
@@ -56,7 +60,7 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
                 <tr>
                     <td><?= $c["placa_nombre"] ?></td>
                     <td><?= $c["placa_precio"] ?> €</td>
-                    <td></td>
+                    <td><?= $c["marca_nombre"] ?></td>
                     <td><a href="listadoComponentes.php?nombre_tabla=placa_base&id=<?= $c["placa_id"] ?>&tipo_componente=placa_id">Eliminar</a></td>
                 </tr>
             <?php endforeach; ?>
@@ -68,6 +72,9 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
 
         <table>
             <thead>
+                <th colspan="3">Cajas</th>
+            </thead>
+            <thead>
                 <th>Nombre</th>
                 <th>Precio</th>
                 <th>Marca</th>
@@ -76,7 +83,7 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
                 <tr>
                     <td><?= $c["caja_nombre"] ?></td>
                     <td><?= $c["caja_precio"] ?> €</td>
-                    <td></td>
+                    <td><?= $c["marca_nombre"] ?></td>
                     <td><a href="listadoComponentes.php?nombre_tabla=caja&id=<?= $c["caja_id"] ?>&tipo_componente=caja_id">Eliminar</a></td>
                 </tr>
             <?php endforeach; ?>
@@ -86,6 +93,9 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
         $componentes = BD::getTablaComponente($nombre_tabla);
         ?>
         <table>
+            <thead>
+                <th colspan="5">Discos duros</th>
+            </thead>
             <thead>
                 <th>Nombre</th>
                 <th>Capacidad</th>
@@ -99,7 +109,7 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
                     <td><?= $c["capacidad"] ?></td>
                     <td><?= $c["tipo"] ?></td>
                     <td><?= $c["discoDuro_precio"] ?> €</td>
-                    <td></td>
+                    <td><?= $c["marca_nombre"] ?></td>
                     <td><a href="listadoComponentes.php?nombre_tabla=disco_duro&id=<?= $c["discoDuro_id"] ?>&tipo_componente=discoDuro_id">Eliminar</a></td>
                 </tr>
             <?php endforeach; ?>
@@ -109,6 +119,9 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
         $componentes = BD::getTablaComponente($nombre_tabla);
         ?>
         <table>
+            <thead>
+                <th colspan="5">Procesadores</th>
+            </thead>
             <thead>
                 <th>Nombre</th>
                 <th>GHz</th>
@@ -122,7 +135,7 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
                     <td><?= $c["gHz"] ?></td>
                     <td><?= $c["nucleos"] ?></td>
                     <td><?= $c["proc_precio"] ?> €</td>
-                    <td></td>
+                    <td><?= $c["marca_nombre"] ?></td>
                     <td><a href="listadoComponentes.php?nombre_tabla=procesador&id=<?= $c["proc_id"] ?>&tipo_componente=proc_id">Eliminar</a></td>
                 </tr>
             <?php endforeach; ?>
@@ -132,6 +145,9 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
         $componentes = BD::getTablaComponente($nombre_tabla);
         ?>
         <table>
+            <thead>
+                <th colspan="5">RAM</th>
+            </thead>
             <thead>
                 <th>Nombre</th>
                 <th>Capacidad</th>
@@ -145,7 +161,7 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
                     <td><?= $c["ram_gb"] ?></td>
                     <td><?= $c["ram_mhz"] ?></td>
                     <td><?= $c["ram_precio"] ?> €</td>
-                    <td></td>
+                    <td><?= $c["marca_nombre"] ?></td>
                     <td><a href="listadoComponentes.php?nombre_tabla=ram&id=<?= $c["ram_id"] ?>&tipo_componente=ram_id">Eliminar</a></td>
                 </tr>
             <?php endforeach; ?>
@@ -155,6 +171,9 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
         $componentes = BD::getTablaComponente($nombre_tabla);
         ?>
         <table>
+            <thead>
+                <th colspan="5">Tarjetas gráficas</th>
+            </thead>
             <thead>
                 <th>Nombre</th>
                 <th>Capacidad</th>
@@ -168,7 +187,7 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
                     <td><?= $c["grafica_Gb"] ?></td>
                     <td><?= $c["rtx"] ? "Si" : "No" ?></td>
                     <td><?= $c["grafica_precio"] ?> €</td>
-                    <td></td>
+                    <td><?= $c["marca_nombre"] ?></td>
                     <td><a href="listadoComponentes.php?nombre_tabla=tarjeta_grafica&id=<?= $c["grafica_id"] ?>&tipo_componente=grafica_id">Eliminar</a></td>
                 </tr>
             <?php endforeach; ?>
