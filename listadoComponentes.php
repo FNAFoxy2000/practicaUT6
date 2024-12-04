@@ -66,6 +66,9 @@ if (isset($_POST["caja_nombre"]) && isset($_POST["caja_precio"]) && isset($_POST
     <div class="contenedorTablas">
         <table>
             <form action="listadoComponentes.php" method="post">
+            <thead>
+                <th colspan="3">Placas base</th>
+            </thead>
                 <thead>
                     <th>Nombre</th>
                     <th>Precio</th>
@@ -75,7 +78,7 @@ if (isset($_POST["caja_nombre"]) && isset($_POST["caja_precio"]) && isset($_POST
                     <tr>
                         <td><?= $c["placa_nombre"] ?></td>
                         <td><?= $c["placa_precio"] ?> €</td>
-                        <td></td>
+                        <td><?= $c["marca_nombre"] ?></td>
                         <td><a href="anadirComponente.php?nombre_tabla=placa_base&id=<?= $c["placa_id"] ?>&tipo_componente=placa_id">Eliminar</a></td>
                     </tr>
                 <?php endforeach; ?>
@@ -96,6 +99,9 @@ if (isset($_POST["caja_nombre"]) && isset($_POST["caja_precio"]) && isset($_POST
 
         <table>
             <form action="listadoComponentes.php" method="post">
+            <thead>
+                <th colspan="3">Cajas</th>
+            </thead>
                 <thead>
                     <th>Nombre</th>
                     <th>Precio</th>
@@ -105,7 +111,7 @@ if (isset($_POST["caja_nombre"]) && isset($_POST["caja_precio"]) && isset($_POST
                     <tr>
                         <td><?= $c["caja_nombre"] ?></td>
                         <td><?= $c["caja_precio"] ?> €</td>
-                        <td></td>
+                        <td><?= $c["marca_nombre"] ?></td>
                         <td><a href="listadoComponentes.php?nombre_tabla=caja&id=<?= $c["caja_id"] ?>&tipo_componente=caja_id">Eliminar</a></td>
                     </tr>
                 <?php endforeach; ?>
@@ -124,6 +130,9 @@ if (isset($_POST["caja_nombre"]) && isset($_POST["caja_precio"]) && isset($_POST
         ?>
         <table>
             <form action="listadoComponentes.php" method="post">
+            <thead>
+                <th colspan="5">Discos duros</th>
+            </thead>
                 <thead>
                     <th>Nombre</th>
                     <th>Capacidad</th>
@@ -137,7 +146,7 @@ if (isset($_POST["caja_nombre"]) && isset($_POST["caja_precio"]) && isset($_POST
                         <td><?= $c["capacidad"] ?></td>
                         <td><?= $c["tipo"] ?></td>
                         <td><?= $c["discoDuro_precio"] ?> €</td>
-                        <td></td>
+                        <td><?= $c["marca_nombre"] ?></td>
                         <td><a href="listadoComponentes.php?nombre_tabla=disco_duro&id=<?= $c["discoDuro_id"] ?>&tipo_componente=discoDuro_id">Eliminar</a></td>
                     </tr>
                 <?php endforeach; ?>
@@ -155,6 +164,9 @@ if (isset($_POST["caja_nombre"]) && isset($_POST["caja_precio"]) && isset($_POST
         ?>
         <table>
             <thead>
+                <th colspan="5">Procesadores</th>
+            </thead>
+            <thead>
                 <th>Nombre</th>
                 <th>GHz</th>
                 <th>Núcleos</th>
@@ -167,7 +179,7 @@ if (isset($_POST["caja_nombre"]) && isset($_POST["caja_precio"]) && isset($_POST
                     <td><?= $c["gHz"] ?></td>
                     <td><?= $c["nucleos"] ?></td>
                     <td><?= $c["proc_precio"] ?> €</td>
-                    <td></td>
+                    <td><?= $c["marca_nombre"] ?></td>
                     <td><a href="listadoComponentes.php?nombre_tabla=procesador&id=<?= $c["proc_id"] ?>&tipo_componente=proc_id">Eliminar</a></td>
                 </tr>
             <?php endforeach; ?>
@@ -177,6 +189,9 @@ if (isset($_POST["caja_nombre"]) && isset($_POST["caja_precio"]) && isset($_POST
         $componentes = BD::getTablaComponente($nombre_tabla);
         ?>
         <table>
+            <thead>
+                <th colspan="5">RAM</th>
+            </thead>
             <thead>
                 <th>Nombre</th>
                 <th>Capacidad</th>
@@ -190,7 +205,7 @@ if (isset($_POST["caja_nombre"]) && isset($_POST["caja_precio"]) && isset($_POST
                     <td><?= $c["ram_gb"] ?></td>
                     <td><?= $c["ram_mhz"] ?></td>
                     <td><?= $c["ram_precio"] ?> €</td>
-                    <td></td>
+                    <td><?= $c["marca_nombre"] ?></td>
                     <td><a href="listadoComponentes.php?nombre_tabla=ram&id=<?= $c["ram_id"] ?>&tipo_componente=ram_id">Eliminar</a></td>
                 </tr>
             <?php endforeach; ?>
@@ -200,6 +215,9 @@ if (isset($_POST["caja_nombre"]) && isset($_POST["caja_precio"]) && isset($_POST
         $componentes = BD::getTablaComponente($nombre_tabla);
         ?>
         <table>
+            <thead>
+                <th colspan="5">Tarjetas gráficas</th>
+            </thead>
             <thead>
                 <th>Nombre</th>
                 <th>Capacidad</th>
@@ -213,7 +231,7 @@ if (isset($_POST["caja_nombre"]) && isset($_POST["caja_precio"]) && isset($_POST
                     <td><?= $c["grafica_Gb"] ?></td>
                     <td><?= $c["rtx"] ? "Si" : "No" ?></td>
                     <td><?= $c["grafica_precio"] ?> €</td>
-                    <td></td>
+                    <td><?= $c["marca_nombre"] ?></td>
                     <td><a href="listadoComponentes.php?nombre_tabla=tarjeta_grafica&id=<?= $c["grafica_id"] ?>&tipo_componente=grafica_id">Eliminar</a></td>
                 </tr>
             <?php endforeach; ?>

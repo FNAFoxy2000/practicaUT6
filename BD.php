@@ -253,7 +253,7 @@ class BD
         }
     }
 
-    public static function getComponentesOrdenador($usuario_id)
+    /* public static function getComponentesOrdenador($usuario_id)
     {
         try {
             $sql = "SELECT placa_id, caja_id, proc_id, grafica_id, ram_id, discoDuro_id FROM ordenador WHERE usuario_id = :usuario_id LIMIT 1";
@@ -266,6 +266,32 @@ class BD
                 return $ordenador[0];
             } else {
                 throw new PDOException("No encontró ningún ordenador para ese usuario");
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al obtener el ordenador: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    } */
+
+    public static function getComponentesOrdenador($usuario_id)
+    {
+        try {
+            $sql = "SELECT c.caja_nombre, d.discoDuro_nombre, pb.placa_nombre, p.proc_nombre, r.ram_nombre, t.grafica_nombre ";
+            $sql .= "FROM caja c, disco_duro d, placa_base pb, procesador p, ram r, tarjeta_grafica t, ordenador o ";
+            $sql .= "WHERE usuario_id = :usuario_id ";
+            $sql .= "AND o.caja_id = c.caja_id AND o.discoDuro_id = d.discoDuro_id ";
+            $sql .= "AND o.placa_id = pb.placa_id AND o.proc_id = p.proc_id ";
+            $sql .= "AND o.ram_id = r.ram_id AND o.grafica_id = t.grafica_id; ";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':usuario_id', $usuario_id);
+            $stmt->execute();
+            $ordenador = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($ordenador) {
+                return $ordenador[0];
+            } else {
+                return false;
             }
         } catch (PDOException $e) {
             throw new Exception("Error al obtener el ordenador: " . $e->getMessage());

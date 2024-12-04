@@ -36,7 +36,7 @@
                     <tr>
                         <td><?= $c["placa_nombre"] ?></td>
                         <td><?= $c["placa_precio"] ?> €</td>
-                        <td></td>
+                        <td><?= $c["marca_nombre"] ?></td>
 
                         <td><a href="pagOrdenador.php?tipo_componente=placa_id&componente_id=<?= $c["placa_id"] ?>">Seleccionar</td>
                     </tr>
@@ -45,7 +45,7 @@
 <?php
         }
         if ($nombre_tabla == "caja") {
-            // Tabla Placa base
+            // Tabla Caja
         ?>
             <table>
                 <thead>
@@ -57,8 +57,9 @@
                     <tr>
                         <td><?= $c["caja_nombre"] ?></td>
                         <td><?= $c["caja_precio"] ?> €</td>
-                        <td></td>
-                        <td><a href="listadoUsuarios.php?usuario_nombre=<?= $u["usuario_nombre"] ?>">Eliminar</td>
+                        <td><?= $c["marca_nombre"] ?></td>
+
+                        <td><a href="pagOrdenador.php?tipo_componente=caja_id&componente_id=<?= $c["caja_id"] ?>">Seleccionar</td>
                     </tr>
                 <?php endforeach; ?>
             </table>
@@ -81,8 +82,9 @@
                         <td><?= $c["capacidad"] ?></td>
                         <td><?= $c["tipo"] ?></td>
                         <td><?= $c["discoDuro_precio"] ?> €</td>
-                        <td></td>
-                        <td><a href="listadoUsuarios.php?usuario_nombre=<?= $u["usuario_nombre"] ?>">Eliminar</td>
+                        <td><?= $c["marca_nombre"] ?></td>
+
+                        <td><a href="pagOrdenador.php?tipo_componente=discoDuro_id&componente_id=<?= $c["discoDuro_id"] ?>">Seleccionar</td>
                     </tr>
                 <?php endforeach; ?>
             </table>
@@ -107,9 +109,9 @@
                         <td><?= $c["gHz"] ?></td>
                         <td><?= $c["nucleos"] ?></td>
                         <td><?= $c["proc_precio"] ?> €</td>
-                        <td></td>
+                        <td><?= $c["marca_nombre"] ?></td>
 
-                        <td><a href="listadoUsuarios.php?usuario_nombre=<?= $u["usuario_nombre"] ?>">Eliminar</td>
+                        <td><a href="pagOrdenador.php?tipo_componente=proc_id&componente_id=<?= $c["proc_id"] ?>">Seleccionar</td>
                     </tr>
                 <?php endforeach; ?>
             </table>
@@ -132,9 +134,9 @@
                         <td><?= $c["ram_gb"] ?></td>
                         <td><?= $c["ram_mhz"] ?></td>
                         <td><?= $c["ram_precio"] ?> €</td>
-                        <td></td>
+                        <td><?= $c["marca_nombre"] ?></td>
 
-                        <td><a href="listadoUsuarios.php?usuario_nombre=<?= $u["usuario_nombre"] ?>">Eliminar</td>
+                        <td><a href="pagOrdenador.php?tipo_componente=ram_id&componente_id=<?= $c["ram_id"] ?>">Seleccionar</td>
                     </tr>
                 <?php endforeach; ?>
             </table>
@@ -158,9 +160,9 @@
                         <td><?= $c["grafica_Gb"] ?></td>
                         <td><?= $c["rtx"] ? "Si" : "No" ?></td>
                         <td><?= $c["grafica_precio"] ?> €</td>
-                        <td></td>
+                        <td><?= $c["marca_nombre"] ?></td>
 
-                        <td><a href="pagOrdenador.php?grafica_nombre=<?= $c["grafica_nombre"] ?>">Eliminar</td>
+                        <td><a href="pagOrdenador.php?tipo_componente=grafica_id&componente_id=<?= $c["grafica_id"] ?>">Seleccionar</td>
                     </tr>
                 <?php endforeach; ?>
             </table>
