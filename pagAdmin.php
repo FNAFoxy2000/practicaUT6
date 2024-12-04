@@ -7,4 +7,7 @@
 <form action="listadoComponentes.php" method="get">
     <input type="submit" value="Listar componentes">
 </form>
+<form action="index.php" method="post">
+        <button type="submit">Volver al inicio</button>
+    </form>
 

@@ -170,4 +170,13 @@
         }
     }
 ?>
+<br>
+    <form action="pagOrdenador.php" method="post">
+        <button type="submit">Volver atrás</button>
+    </form>
+    <br>
+    <form action="index.php" method="post">
+        <button type="submit">Volver al inicio</button>
+    </form>
+
 </body>
