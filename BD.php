@@ -323,24 +323,24 @@ class BD
         }
     }
 
-    public static function borrarComponente($nombre_tabla, $id,$tipo_componente): bool
+    public static function borrarComponente($nombre_tabla, $tipo_componente,$id): bool
     {
         try {
             //Consulta con un param
-            $sql = "DELETE FROM $nombre_tabla WHERE $tipo_componente = :usuario_nombre";
+            $sql = "DELETE FROM $nombre_tabla WHERE $tipo_componente = :id" ;
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':usuario_nombre', $usuario);
+            $stmt->bindParam(':id', $id);
             $stmt->execute();
             $lineas = $stmt->rowCount();
             //Recuperar los datos
             if ($lineas) {
                 return true;
             } else {
-                throw new PDOException("No se encontró ningún usuario");
+                throw new PDOException("No se encontró ningún componente");
             }
         } catch (PDOException $e) {
-            throw new Exception("Error al borrar usuario: " . $e->getMessage());
+            throw new Exception("Error al borrar componente: " . $e->getMessage());
         } finally {
             self::CerrarConexion();
         }
