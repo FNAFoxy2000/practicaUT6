@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "BD.php";
+//Borrar componente
 if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
     $nombre_tabla = $_GET['nombre_tabla'];
     $tipo_componente = $_GET['tipo_componente'];
@@ -8,7 +9,23 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
     BD::borrarComponente($nombre_tabla, $tipo_componente, $id);
     header("Location: listadoComponentes.php");
 }
-
+//Añadir placa base
+if (isset($_POST["placa_nombre"]) && isset($_POST["placa_precio"]) && isset($_POST["placa_marca"])) {
+    $placa_nombre = $_GET["placa_nombre"];
+    $placa_precio = $_GET["placa_precio"];
+    $placa_marca = $_GET["placa_marca"];
+    BD::anadirPlacaBase($nombre_placa, $placa_precio, $placa_marca);
+    header("Location: listadoComponentes.php");
+}
+//Añadir caja
+if (isset($_POST["caja_nombre"]) && isset($_POST["caja_precio"]) && isset($_POST["caja_marca"])) {
+    $caja_nombre = $_GET["caja_nombre"];
+    $caja_precio = $_GET["caja_precio"];
+    $caja_marca = $_GET["caja_marca"];
+    BD::anadirCaja($caja_nombre, $caja_precio, $caja_marca);
+    header("Location: listadoComponentes.php");
+}
+//Añadir Disco duro
 
 ?>
 <!DOCTYPE html>
@@ -48,70 +65,89 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
     ?>
     <div class="contenedorTablas">
         <table>
-            <form>
-            <thead>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Marca</th>
-            </thead>
-            <?php foreach ($componentes as $c): ?>
+            <form action="listadoComponentes.php" method="post">
+                <thead>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Marca</th>
+                </thead>
+                <?php foreach ($componentes as $c): ?>
+                    <tr>
+                        <td><?= $c["placa_nombre"] ?></td>
+                        <td><?= $c["placa_precio"] ?> €</td>
+                        <td></td>
+                        <td><a href="anadirComponente.php?nombre_tabla=placa_base&id=<?= $c["placa_id"] ?>&tipo_componente=placa_id">Eliminar</a></td>
+                    </tr>
+                <?php endforeach; ?>
                 <tr>
-                    <td><?= $c["placa_nombre"] ?></td>
-                    <td><?= $c["placa_precio"] ?> €</td>
-                    <td></td>
-                    <td><a href="listadoComponentes.php?nombre_tabla=placa_base&id=<?= $c["placa_id"] ?>&tipo_componente=placa_id">Eliminar</a></td>
+                    <td><input type="text" name="placa_nombre"></td>
+                    <td><input type="number" name="placa_precio"></td>
+                    <td><input type="text" name="placa_marca"></td>
+                    <td><input type="submit" name="" value="Añadir"></td>
                 </tr>
-            <?php endforeach; ?>
-            <tr>
-                <td><input type="text" name="nombre_placa"></td>
-                <td><input type="text" name="precio_placa"></td>
-            </tr>
             </form>
         </table>
         <br>
-        
+
         <?php
         $nombre_tabla = "caja";
         $componentes = BD::getTablaComponente($nombre_tabla);
         ?>
 
         <table>
-            <thead>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Marca</th>
-            </thead>
-            <?php foreach ($componentes as $c): ?>
+            <form action="listadoComponentes.php" method="post">
+                <thead>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Marca</th>
+                </thead>
+                <?php foreach ($componentes as $c): ?>
+                    <tr>
+                        <td><?= $c["caja_nombre"] ?></td>
+                        <td><?= $c["caja_precio"] ?> €</td>
+                        <td></td>
+                        <td><a href="listadoComponentes.php?nombre_tabla=caja&id=<?= $c["caja_id"] ?>&tipo_componente=caja_id">Eliminar</a></td>
+                    </tr>
+                <?php endforeach; ?>
                 <tr>
-                    <td><?= $c["caja_nombre"] ?></td>
-                    <td><?= $c["caja_precio"] ?> €</td>
-                    <td></td>
-                    <td><a href="listadoComponentes.php?nombre_tabla=caja&id=<?= $c["caja_id"] ?>&tipo_componente=caja_id">Eliminar</a></td>
+                    <td><input type="text" name="caja_nombre"></td>
+                    <td><input type="number" name="caja_precio"></td>
+                    <td><input type="number" name="caja_marca"></td>
+                    <td><input type="submit" name="" value="Añadir"></td>
                 </tr>
-            <?php endforeach; ?>
+            </form>
+
         </table>
         <?php
         $nombre_tabla = "disco_duro";
         $componentes = BD::getTablaComponente($nombre_tabla);
         ?>
         <table>
-            <thead>
-                <th>Nombre</th>
-                <th>Capacidad</th>
-                <th>Tipo</th>
-                <th>Precio</th>
-                <th>Marca</th>
-            </thead>
-            <?php foreach ($componentes as $c): ?>
+            <form action="listadoComponentes.php" method="post">
+                <thead>
+                    <th>Nombre</th>
+                    <th>Capacidad</th>
+                    <th>Tipo</th>
+                    <th>Precio</th>
+                    <th>Marca</th>
+                </thead>
+                <?php foreach ($componentes as $c): ?>
+                    <tr>
+                        <td><?= $c["discoDuro_nombre"] ?></td>
+                        <td><?= $c["capacidad"] ?></td>
+                        <td><?= $c["tipo"] ?></td>
+                        <td><?= $c["discoDuro_precio"] ?> €</td>
+                        <td></td>
+                        <td><a href="listadoComponentes.php?nombre_tabla=disco_duro&id=<?= $c["discoDuro_id"] ?>&tipo_componente=discoDuro_id">Eliminar</a></td>
+                    </tr>
+                <?php endforeach; ?>
                 <tr>
-                    <td><?= $c["discoDuro_nombre"] ?></td>
-                    <td><?= $c["capacidad"] ?></td>
-                    <td><?= $c["tipo"] ?></td>
-                    <td><?= $c["discoDuro_precio"] ?> €</td>
-                    <td></td>
-                    <td><a href="listadoComponentes.php?nombre_tabla=disco_duro&id=<?= $c["discoDuro_id"] ?>&tipo_componente=discoDuro_id">Eliminar</a></td>
+                    <td><input type="text" name="caja_nombre"></td>
+                    <td><input type="text" name="caja_precio"></td>
+                    <td><input type="text" name="caja_marca"></td>
+                    <td><input type="submit" name="" value="Añadir"></td>
                 </tr>
-            <?php endforeach; ?>
+            </form>
         </table>
         <?php
         $nombre_tabla = "procesador";
