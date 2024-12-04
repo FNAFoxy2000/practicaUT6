@@ -106,7 +106,7 @@
                         <td><?= $c["proc_nombre"] ?></td>
                         <td><?= $c["gHz"] ?></td>
                         <td><?= $c["nucleos"] ?></td>
-                        <td><?= $c["procesador_precio"] ?> €</td>
+                        <td><?= $c["proc_precio"] ?> €</td>
                         <td></td>
 
                         <td><a href="listadoUsuarios.php?usuario_nombre=<?= $u["usuario_nombre"] ?>">Eliminar</td>

@@ -346,33 +346,26 @@ class BD
         }
     }
 
-
-    // Obtener nombre segun id
-    public static function obtenerNombrePorId($nombreTablaComponente, $tipo_componente, $componente_id)
+    public static function borrarComponente($nombre_tabla, $tipo_componente,$id): bool
     {
-        $nombreComponente = $tipo_componente . "_nombre";
-        $idComponente = $tipo_componente . "_id";
-        if ($componente_id != null) {
-            try {
-                $sql = "SELECT $nombreComponente FROM $nombreTablaComponente WHERE $idComponente = $componente_id";
-                $conn = self::Conectar();
-                $stmt = $conn->prepare($sql);
-                // $stmt->bindParam(':tipo_componente', $tipo_componente);
-                $stmt->execute();
-                //Recuperar los datos
-                $componente_nombre = $stmt->fetch(PDO::FETCH_ASSOC);
-                if ($componente_nombre) {
-                    return $componente_nombre[$nombreComponente];
-                } else {
-                    throw new PDOException("No se encontró ningun componente con ese id");
-                }
-            } catch (PDOException $e) {
-                throw new Exception("Error al obtener tabla: " . $e->getMessage());
-            } finally {
-                self::CerrarConexion();
+        try {
+            //Consulta con un param
+            $sql = "DELETE FROM $nombre_tabla WHERE $tipo_componente = :id" ;
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $lineas = $stmt->rowCount();
+            //Recuperar los datos
+            if ($lineas) {
+                return true;
+            } else {
+                throw new PDOException("No se encontró ningún componente");
             }
-        }else{
-            return "";
+        } catch (PDOException $e) {
+            throw new Exception("Error al borrar componente: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
         }
     }
 }
