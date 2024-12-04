@@ -119,7 +119,7 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
                     <tr>
                         <td><?= $c["placa_nombre"] ?></td>
                         <td><?= $c["placa_precio"] ?> €</td>
-                        <td><?= $c["marca_id"] ?></td>
+                        <td><?= $c["marca_nombre"] ?></td>
                         <td><a href="anadirComponente.php?nombre_tabla=placa_base&id=<?= $c["placa_id"] ?>&tipo_componente=placa_id">Eliminar</a></td>
                     </tr>
                 <?php endforeach; ?>
@@ -320,3 +320,7 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
         <button type="submit">Volver al inicio</button>
     </form>
 </body>
+<?php
+//PONER SELECTS EN MARCAS y RTX, TIPO DISCO
+// añadir un comp
+// añadir tabla marcas para añadirlas
