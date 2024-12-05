@@ -88,7 +88,7 @@ if (isset($_POST["marca_nombre"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Panel de administrador</title>
     <style>
         table {
             border-collapse: collapse;
