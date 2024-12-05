@@ -67,7 +67,20 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
     BD::anadirRam($grafica_nombre, $grafica_Gb, $rtx, $grafica_precio, $marca_id);
     header("Location: listadoComponentes.php");
 }
-
+if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_POST["rtx"]) && isset($_POST["grafica_precio"]) && isset($_POST["marca_id"])) {
+    $grafica_nombre = $_POST["grafica_nombre"];
+    $grafica_Gb = $_POST["grafica_Gb"];
+    $rtx = $_POST["rtx"];
+    $grafica_precio = $_POST["grafica_precio"];
+    $marca_id = $_POST["marca_id"];
+    BD::anadirRam($grafica_nombre, $grafica_Gb, $rtx, $grafica_precio, $marca_id);
+    header("Location: listadoComponentes.php");
+}
+if (isset($_POST["marca_nombre"])) {
+    $marca_nombre = $_POST["marca_nombre"];
+    BD::anadirMarca($marca_nombre);
+    header("Location: listadoComponentes.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -131,7 +144,7 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
                 <!-- Añadir -->
                 <tr>
                     <td><input type="text" name="placa_nombre"></td>
-                    <td><input type="number" name="placa_precio" step="any" required min="0"></td>
+                    <td><input type="number" name="placa_precio" step=".01" required min="0"></td>
                     <td><select name="marca_id">
                             <option value="" selected disabled hidden> - </option>
                             <?php foreach ($marcas as $m): ?>
@@ -170,8 +183,8 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
                 <?php endforeach; ?>
                 <!-- Añadir -->
                 <tr>
-                    <td><input type="text" name="caja_nombre"></td>
-                    <td><input type="number" name="caja_precio"></td>
+                    <td><input type="text" name="caja_nombre" required></td>
+                    <td><input type="number" name="caja_precio" step=".01" required min="0"></td>
                     <td><select name="marca_id">
                             <option value="" selected disabled hidden> - </option>
                             <?php foreach ($marcas as $m): ?>
@@ -212,8 +225,8 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
                 <?php endforeach; ?>
                 <!-- Añadir -->
                 <tr>
-                    <td><input type="text" name="discoDuro_nombre"></td>
-                    <td><input type="text" name="capacidad"> GB</td>
+                    <td><input type="text" name="discoDuro_nombre" required></td>
+                    <td><input type="text" name="capacidad"  step=".01" required min="0"> GB</td>
                     <td><select name="tipo">
                             <option value="" selected disabled hidden> - </option>
                             <option value="HDD">HDD</option>
@@ -393,6 +406,7 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
                         <td><a href="listadoComponentes.php?nombre_tabla=marca&id=<?= $c["marca_id"] ?>&tipo_componente=marca_id">Eliminar</a></td>
                     </tr>
                 <?php endforeach; ?>
+                <!-- Añadir -->
                 <tr>
                     <td><input type="text" name="marca_nombre"></td>
                     <td><input type="submit" value="Añadir"></td>
