@@ -10,8 +10,6 @@ if(isset($_GET["tipo_componente"]) && isset($_GET["componente_id"])){
 }
 
 $ordenador = BD::getComponentesOrdenador($usuario_id);
-var_dump($ordenador);
-
 
 ?>
 <!DOCTYPE html>

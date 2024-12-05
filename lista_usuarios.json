@@ -1,0 +1,16 @@
+[
+    {
+        "usuario_id": 1,
+        "usuario_nombre": "Marcos",
+        "password": "$2y$10$9q3pSAten.Mkbf8iPEOJFeeMt2rSHSnxo2fWxcyNOow67WyFBqH\/G",
+        "email": "marcos@email.com",
+        "admin": 1
+    },
+    {
+        "usuario_id": 2,
+        "usuario_nombre": "Fernando",
+        "password": "$2y$10$aFjBOGaroM6Sdy.MyEzn0.j9Y.\/c6DkA2A0T69J.PQfsGGnimW6Hu",
+        "email": "fernando@email.com",
+        "admin": 0
+    }
+]
