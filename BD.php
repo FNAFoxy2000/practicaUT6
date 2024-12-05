@@ -12,7 +12,7 @@ class BD
     {
         try {
             // Crear conexion PDO
-            self::$conn = new PDO(BD::$destino, BD::$user, BD::$password);
+            self::$conn = new PDO(self::$destino, self::$user, self::$password);
             self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             // echo "Conectado :)<br>";
         } catch (PDOException $e) {
@@ -42,7 +42,7 @@ class BD
             $stmt->execute();
 
             // Crear ordenador para el usuario
-            $usuario_id = BD::getUsuarioId($usuario);
+            $usuario_id = self::getUsuarioId($usuario);
             $sql = "INSERT INTO ordenador (usuario_id) VALUES (:usuario_id)";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
@@ -121,7 +121,6 @@ class BD
     public static function getListaUsuarios()
     {
         try {
-            //Consulta con un param
             $sql = "SELECT * FROM usuario";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
@@ -144,7 +143,6 @@ class BD
     public static function borrarUsuario($usuario)
     {
         try {
-            //Consulta con un param
             $sql = "DELETE FROM usuario WHERE usuario_nombre = :usuario_nombre";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
@@ -235,7 +233,6 @@ class BD
     public static function getUsuarioId($usuario)
     {
         try {
-            //Consulta con un param
             $sql = "SELECT usuario_id FROM usuario WHERE usuario_nombre = :usuario_nombre LIMIT 1";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
@@ -309,7 +306,6 @@ class BD
     public static function getMarcas()
     {
         try {
-            //Consulta con un param
             $sql = "SELECT * FROM marca";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
@@ -360,7 +356,6 @@ class BD
     public static function borrarComponente($nombre_tabla, $tipo_componente, $id)
     {
         try {
-            //Consulta con un param
             $sql = "DELETE FROM $nombre_tabla WHERE $tipo_componente = :id";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
@@ -386,7 +381,6 @@ class BD
     public static function anadirCaja($caja_nombre, $caja_precio, $marca_id)
     {
         try {
-            //Consulta con un param
             $sql = "INSERT INTO caja (caja_nombre, caja_precio, marca_id) VALUES (:caja_nombre, :caja_precio, :marca_id)";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
@@ -411,7 +405,6 @@ class BD
     public static function anadirdiscoDuro($discoDuro_nombre, $capacidad, $tipo, $discoDuro_precio, $marca_id)
     {
         try {
-            //Consulta con un param
             $sql = "INSERT INTO disco_duro (discoDuro_nombre, capacidad, tipo, discoDuro_precio, marca_id) ";
             $sql .= "VALUES (:discoDuro_nombre, :capacidad, :tipo, :discoDuro_precio, :marca_id)";
             $conn = self::Conectar();
@@ -439,7 +432,6 @@ class BD
     public static function anadirMarca($marca_nombre)
     {
         try {
-            //Consulta con un param
             $sql = "INSERT INTO marca (marca_nombre) VALUES (:marca_nombre)";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
@@ -462,7 +454,6 @@ class BD
     public static function anadirPlacaBase($placa_nombre, $placa_precio, $marca_id)
     {
         try {
-            //Consulta con un param
             $sql = "INSERT INTO placa_base (placa_nombre, placa_precio, marca_id) VALUES (:placa_nombre, :placa_precio, :marca_id)";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
@@ -487,7 +478,6 @@ class BD
     public static function anadirProcesador($proc_nombre, $gHz, $nucleos, $proc_precio, $marca_id)
     {
         try {
-            //Consulta con un param
             $sql = "INSERT INTO proc (proc_nombre, gHz, nucleos, proc_precio, marca_id) VALUES (:proc_nombre, :gHz, :nucleos, :proc_precio, :marca_id)";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
@@ -514,7 +504,6 @@ class BD
     public static function anadirRam($ram_nombre, $ram_gb, $ram_mhz, $ram_precio, $marca_id)
     {
         try {
-            //Consulta con un param
             $sql = "INSERT INTO ram (ram_nombre, ram_gb, ram_mhz, ram_precio, marca_id) VALUES (:ram_nombre,  :ram_gb, :ram_mhz, :ram_precio, :marca_id)";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
@@ -541,7 +530,6 @@ class BD
     public static function anadirGrafica($grafica_nombre, $grafica_Gb, $rtx, $grafica_precio, $marca_id)
     {
         try {
-            //Consulta con un param
             $sql = "INSERT INTO tarjeta_grafica (grafica_nombre, grafica_Gb, rtx, grafica_precio, marca_id) VALUES (:grafica_nombre, :grafica_Gb, :rtx, :grafica_precio, :marca_id)";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
@@ -567,7 +555,8 @@ class BD
 
     #endregion
 
-    public static function exportarJson(){
+    public static function exportarJson()
+    {
         $usuarios = self::getListaUsuarios();
         $jsonUsuarios = json_encode($usuarios, JSON_PRETTY_PRINT);
         $rutaArchivoJson1 = "lista_usuarios.json";
@@ -575,12 +564,12 @@ class BD
         header('Content-Type: application/json');
         header('Content-Disposition: attachment; filename="lista_usuarios.json"');
         header('Content-Length: ' . strlen($jsonUsuarios));
-        if(file_exists($rutaArchivoJson1)){
+        if (file_exists($rutaArchivoJson1)) {
             $usuariosDatos = file_get_contents($rutaArchivoJson1);
             echo "$usuariosDatos";
             $usuariosDatos = json_decode($usuariosDatos, true); // muy importante poner true para recibir cada cosa como array asociativa.
             // al decodificar un json con un objeto, hay que reconstruir las instancias
-            
+
         }
         exit;
     }
