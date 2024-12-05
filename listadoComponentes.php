@@ -144,8 +144,7 @@ if (isset($_POST["marca_nombre"])) {
                 <!-- Añadir -->
                 <tr>
                     <td><input type="text" name="placa_nombre"></td>
-                    <td><input type="number" name="placa_precio" step=".01" required min="0"></td>
-                    <td><input type="number" name="placa_precio" step=".01" required min="0"></td>
+                    <td><input type="number" name="placa_precio" step="any" required min="0"></td>    
                     <td><select name="marca_id">
                             <option value="" selected disabled hidden> - </option>
                             <?php foreach ($marcas as $m): ?>
@@ -185,8 +184,8 @@ if (isset($_POST["marca_nombre"])) {
                 <!-- Añadir -->
                 <tr>
                     <td><input type="text" name="caja_nombre" required></td>
-                    <td><input type="number" name="caja_precio" step=".01" required min="0"></td>
-                    <td><select name="marca_id">
+                    <td><input type="number" name="caja_precio" step="any" required min="0"></td>
+                    <td><select name="marca_id" required>
                             <option value="" selected disabled hidden> - </option>
                             <?php foreach ($marcas as $m): ?>
                                 <option value=<?= $m["marca_id"] ?>><?= $m["marca_nombre"] ?> </option>
@@ -227,15 +226,15 @@ if (isset($_POST["marca_nombre"])) {
                 <!-- Añadir -->
                 <tr>
                     <td><input type="text" name="discoDuro_nombre" required></td>
-                    <td><input type="text" name="capacidad"  step=".01" required min="0"> GB</td>
-                    <td><select name="tipo">
+                    <td><input type="text" name="capacidad" step="any" required min="0"> GB</td>
+                    <td><select name="tipo" required>
                             <option value="" selected disabled hidden> - </option>
                             <option value="HDD">HDD</option>
                             <option value="SSD">SSD</option>
                         </select>
                     </td>
-                    <td><input type="number" name="discoDuro_precio" step=".01" required min="0"></td>
-                    <td><select name="marca_id">
+                    <td><input type="number" name="discoDuro_precio" step="any" required min="0"></td>
+                    <td><select name="marca_id" required>
                             <option value="" selected disabled hidden> - </option>
                             <?php foreach ($marcas as $m): ?>
                                 <option value=<?= $m["marca_id"] ?>><?= $m["marca_nombre"] ?></option>
@@ -274,10 +273,10 @@ if (isset($_POST["marca_nombre"])) {
                 <?php endforeach; ?>
                 <!-- Añadir -->
                 <tr>
-                    <td><input type="text" name="proc_nombre"></td>
-                    <td><input type="text" name="gHz"></td>
-                    <td><input type="text" name="nucleos"></td>
-                    <td><input type="text" name="proc_precio" step=".01" required min="0"></td>
+                    <td><input type="text" name="proc_nombre" required></td>
+                    <td><input type="number" name="gHz" step="any" required min="0"></td>
+                    <td><input type="number" name="nucleos" step="any" required min="0"></td>
+                    <td><input type="text" name="proc_precio" step="any" required min="0"></td>
                     <td><select name="marca_id">
                             <option value="" selected disabled hidden> - </option>
                             <?php foreach ($marcas as $m): ?>
@@ -317,8 +316,8 @@ if (isset($_POST["marca_nombre"])) {
                 <?php endforeach; ?>
                 <!-- Añadir -->
                 <tr>
-                    <td><input type="text" name="ram_nombre"></td>
-                    <td><select name="ram_gb">
+                    <td><input type="text" name="ram_nombre" required></td>
+                    <td><select name="ram_gb" required>
                             <option value="" selected disabled hidden> - </option>
                             <option value="4">4</option>
                             <option value="8">8</option>
@@ -326,9 +325,9 @@ if (isset($_POST["marca_nombre"])) {
                             <option value="32">32</option>
                         </select> GB
                     </td>
-                    <td><input type="text" name="ram_mhz"></td>
-                    <td><input type="text" name="ram_precio" step=".01" required min="0"></td>
-                    <td><select name="marca_id">
+                    <td><input type="number" name="ram_mhz" step="any" required min="0"></td>
+                    <td><input type="text" name="ram_precio" step="any" required min="0"></td>
+                    <td><select name="marca_id" required>
                             <option value="" selected disabled hidden> - </option>
                             <?php foreach ($marcas as $m): ?>
                                 <option value=<?= $m["marca_id"] ?>><?= $m["marca_nombre"] ?></option>
@@ -367,16 +366,16 @@ if (isset($_POST["marca_nombre"])) {
                 <?php endforeach; ?>
                 <!-- Añadir -->
                 <tr>
-                    <td><input type="text" name="grafica_nombre"></td>
-                    <td><input type="number" name="grafica_Gb"> GB</td>
-                    <td><select name="rtx">
+                    <td><input type="text" name="grafica_nombre" required></td>
+                    <td><input type="number" name="grafica_Gb" step="any" required min="0"> GB</td>
+                    <td><select name="rtx" required>
                             <option value="" selected disabled hidden> - </option>
                             <option value="1">Si</option>
                             <option value="0">No</option>
                         </select>
                     </td>
-                    <td><input type="number" name="grafica_precio" step=".01" required min="0"></td>
-                    <td><select name="marca_id">
+                    <td><input type="number" name="grafica_precio" step="any" required min="0"></td>
+                    <td><select name="marca_id" required>
                             <option value="" selected disabled hidden> - </option>
                             <?php foreach ($marcas as $m): ?>
                                 <option value=<?= $m["marca_id"] ?>><?= $m["marca_nombre"] ?></option>
@@ -409,7 +408,7 @@ if (isset($_POST["marca_nombre"])) {
                 <?php endforeach; ?>
                 <!-- Añadir -->
                 <tr>
-                    <td><input type="text" name="marca_nombre"></td>
+                    <td><input type="text" name="marca_nombre" required></td>
                     <td><input type="submit" value="Añadir"></td>
                 </tr>
             </form>
