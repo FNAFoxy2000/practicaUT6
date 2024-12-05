@@ -1,5 +1,5 @@
 <?php
-
+include_once "Usuario.php";
 class BD
 {
     private static $destino = "mysql:host=localhost;dbname=Configurador_Ordenadores;charset=utf8mb4";
@@ -566,4 +566,22 @@ class BD
     }
 
     #endregion
+
+    public static function exportarJson(){
+        $usuarios = self::getListaUsuarios();
+        $jsonUsuarios = json_encode($usuarios, JSON_PRETTY_PRINT);
+        $rutaArchivoJson1 = "lista_usuarios.json";
+        file_put_contents($rutaArchivoJson1, $jsonUsuarios);
+        header('Content-Type: application/json');
+        header('Content-Disposition: attachment; filename="lista_usuarios.json"');
+        header('Content-Length: ' . strlen($jsonUsuarios));
+        if(file_exists($rutaArchivoJson1)){
+            $usuariosDatos = file_get_contents($rutaArchivoJson1);
+            echo "$usuariosDatos";
+            $usuariosDatos = json_decode($usuariosDatos, true); // muy importante poner true para recibir cada cosa como array asociativa.
+            // al decodificar un json con un objeto, hay que reconstruir las instancias
+            
+        }
+        exit;
+    }
 }

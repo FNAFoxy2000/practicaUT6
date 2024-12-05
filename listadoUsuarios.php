@@ -5,6 +5,9 @@ if (isset($_GET["usuario_nombre"])) {
     $usuario = $_GET["usuario_nombre"];
     BD::borrarUsuario($usuario);
 }
+if (isset($_POST["exportar_json"])) {
+    BD::exportarJson();
+}
 
 // Cargar tabla usuarios
 $usuarios = BD::getListaUsuarios();
@@ -53,7 +56,10 @@ $usuarios = BD::getListaUsuarios();
     <form action="index.php" method="post">
         <button type="submit">Volver al inicio</button>
     </form>
-
+    
+    <form action="listadoUsuarios.php" method="post">
+        <button type="submit" name="exportar_json">Exportar a JSON</button>
+    </form>
 </body>
 
 </html>
