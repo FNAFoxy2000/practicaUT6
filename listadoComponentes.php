@@ -125,7 +125,7 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
                         <td><?= $c["placa_nombre"] ?></td>
                         <td><?= $c["placa_precio"] ?> €</td>
                         <td><?= $c["marca_nombre"] ?></td>
-                        <td><a href="anadirComponente.php?nombre_tabla=placa_base&id=<?= $c["placa_id"] ?>&tipo_componente=placa_id">Eliminar</a></td>
+                        <td><a href="listadoComponentes.php?nombre_tabla=placa_base&id=<?= $c["placa_id"] ?>&tipo_componente=placa_id">Eliminar</a></td>
                     </tr>
                 <?php endforeach; ?>
                 <!-- Añadir -->
