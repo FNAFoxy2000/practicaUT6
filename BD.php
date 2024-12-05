@@ -306,6 +306,28 @@ class BD
         }
     }
 
+    public static function getMarcas()
+    {
+        try {
+            //Consulta con un param
+            $sql = "SELECT * FROM marca";
+            $conn = self::Conectar();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+
+            //Recuperar los datos
+            $marcas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($marcas) {
+                return $marcas;
+            } else {
+                throw new PDOException("No se encontró ningúna marca");
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Error al obtener marcas: " . $e->getMessage());
+        } finally {
+            self::CerrarConexion();
+        }
+    }
     // Obtener nombre segun id
     /* public static function obtenerNombrePorId($nombreTablaComponente, $tipo_componente, $componente_id)
     {
@@ -441,7 +463,7 @@ class BD
     {
         try {
             //Consulta con un param
-            $sql = "INSERT INTO placa (placa_nombre, placa_precio, marca_id) VALUES (:placa_nombre, :placa_precio, :marca_id)";
+            $sql = "INSERT INTO placa_base (placa_nombre, placa_precio, marca_id) VALUES (:placa_nombre, :placa_precio, :marca_id)";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':placa_nombre', $placa_nombre);

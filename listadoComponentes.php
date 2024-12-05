@@ -11,59 +11,59 @@ if (isset($_GET['nombre_tabla'], $_GET['id'], $_GET['tipo_componente'])) {
 }
 //Añadir placa base
 if (isset($_POST["placa_nombre"]) && isset($_POST["placa_precio"]) && isset($_POST["marca_id"])) {
-    $placa_nombre = $_GET["placa_nombre"];
-    $placa_precio = $_GET["placa_precio"];
-    $marca_id = $_GET["marca_id"];
+    $placa_nombre = $_POST["placa_nombre"];
+    $placa_precio = $_POST["placa_precio"];
+    $marca_id = $_POST["marca_id"];
     BD::anadirPlacaBase($placa_nombre, $placa_precio, $marca_id);
     header("Location: listadoComponentes.php");
 }
 //Añadir caja
 if (isset($_POST["caja_nombre"]) && isset($_POST["caja_precio"]) && isset($_POST["marca_id"])) {
-    $caja_nombre = $_GET["caja_nombre"];
-    $caja_precio = $_GET["caja_precio"];
-    $marca_id = $_GET["marca_id"];
+    $caja_nombre = $_POST["caja_nombre"];
+    $caja_precio = $_POST["caja_precio"];
+    $marca_id = $_POST["marca_id"];
     BD::anadirCaja($caja_nombre, $caja_precio, $marca_id);
     header("Location: listadoComponentes.php");
 }
 //Añadir Disco duro
 if (isset($_POST["discoDuro_nombre"]) && isset($_POST["capacidad"]) && isset($_POST["tipo"]) && isset($_POST["discoDuro_precio"]) && isset($_POST["marca_id"])) {
-    $discoDuro_nombre = $_GET["discoDuro_nombre"];
-    $capacidad = $_GET["capacidad"];
+    $discoDuro_nombre = $_POST["discoDuro_nombre"];
+    $capacidad = $_POST["capacidad"];
     $tipo = $_POST["tipo"];
     $discoDuro_precio = $_POST["discoDuro_precio"];
-    $marca_id = $_GET["marca_id"];
+    $marca_id = $_POST["marca_id"];
     BD::anadirDiscoDuro($discoDuro_nombre, $capacidad, $tipo, $discoDuro_precio, $marca_id);
     header("Location: listadoComponentes.php");
 }
 
 //Añadir Procesador
 if (isset($_POST["proc_nombre"]) && isset($_POST["gHz"]) && isset($_POST["nucleos"]) && isset($_POST["proc_precio"]) && isset($_POST["marca_id"])) {
-    $proc_nombre = $_GET["proc_nombre"];
-    $gHz = $_GET["gHz"];
-    $nucleos = $_GET["nucleos"];
-    $proc_precio = $_GET["proc_precio"];
-    $marca_id = $_GET["marca_id"];
+    $proc_nombre = $_POST["proc_nombre"];
+    $gHz = $_POST["gHz"];
+    $nucleos = $_POST["nucleos"];
+    $proc_precio = $_POST["proc_precio"];
+    $marca_id = $_POST["marca_id"];
     BD::anadirProcesador($proc_nombre, $gHz, $nucleos, $proc_precio, $marca_id);
     header("Location: listadoComponentes.php");
 }
 
 //Añadir RAM
 if (isset($_POST["ram_nombre"]) && isset($_POST["ram_gb"]) && isset($_POST["ram_mhz"]) && isset($_POST["ram_precio"]) && isset($_POST["marca_id"])) {
-    $ram_nombre = $_GET["ram_nombre"];
-    $ram_gb = $_GET["ram_gb"];
-    $ram_mhz = $_GET["ram_mhz"];
-    $ram_precio = $_GET["ram_precio"];
-    $marca_id = $_GET["marca_id"];
+    $ram_nombre = $_POST["ram_nombre"];
+    $ram_gb = $_POST["ram_gb"];
+    $ram_mhz = $_POST["ram_mhz"];
+    $ram_precio = $_POST["ram_precio"];
+    $marca_id = $_POST["marca_id"];
     BD::anadirRam($ram_nombre, $ram_gb, $ram_mhz, $ram_precio, $marca_id);
     header("Location: listadoComponentes.php");
 }
 //Añadir Gráfica
 if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_POST["rtx"]) && isset($_POST["grafica_precio"]) && isset($_POST["marca_id"])) {
-    $grafica_nombre = $_GET["grafica_nombre"];
-    $grafica_Gb = $_GET["grafica_Gb"];
-    $rtx = $_GET["rtx"];
-    $grafica_precio = $_GET["grafica_precio"];
-    $marca_id = $_GET["marca_id"];
+    $grafica_nombre = $_POST["grafica_nombre"];
+    $grafica_Gb = $_POST["grafica_Gb"];
+    $rtx = $_POST["rtx"];
+    $grafica_precio = $_POST["grafica_precio"];
+    $marca_id = $_POST["marca_id"];
     BD::anadirRam($grafica_nombre, $grafica_Gb, $rtx, $grafica_precio, $marca_id);
     header("Location: listadoComponentes.php");
 }
@@ -95,6 +95,10 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
             justify-content: center;
             align-items: flex-start;
         }
+
+        select {
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -103,6 +107,7 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
     $usuario = $_SESSION["usuario"];
     $nombre_tabla = "placa_base";
     $componentes = BD::getTablaComponente($nombre_tabla);
+    $marcas = BD::getMarcas();
     ?>
     <div class="contenedorTablas">
         <table>
@@ -123,10 +128,17 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
                         <td><a href="anadirComponente.php?nombre_tabla=placa_base&id=<?= $c["placa_id"] ?>&tipo_componente=placa_id">Eliminar</a></td>
                     </tr>
                 <?php endforeach; ?>
+                <!-- Añadir -->
                 <tr>
                     <td><input type="text" name="placa_nombre"></td>
-                    <td><input type="number" name="placa_precio"></td>
-                    <td><input type="text" name="marca_id"></td>
+                    <td><input type="number" name="placa_precio" step="any" required min="0"></td>
+                    <td><select name="marca_id">
+                            <option value="" selected disabled hidden> - </option>
+                            <?php foreach ($marcas as $m): ?>
+                                <option value=<?= $m["marca_id"] ?>><?= $m["marca_nombre"] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
                     <td><input type="submit" value="Añadir"></td>
                 </tr>
             </form>
@@ -156,10 +168,17 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
                         <td><a href="listadoComponentes.php?nombre_tabla=caja&id=<?= $c["caja_id"] ?>&tipo_componente=caja_id">Eliminar</a></td>
                     </tr>
                 <?php endforeach; ?>
+                <!-- Añadir -->
                 <tr>
                     <td><input type="text" name="caja_nombre"></td>
                     <td><input type="number" name="caja_precio"></td>
-                    <td><input type="number" name="marca_id"></td>
+                    <td><select name="marca_id">
+                            <option value="" selected disabled hidden> - </option>
+                            <?php foreach ($marcas as $m): ?>
+                                <option value=<?= $m["marca_id"] ?>><?= $m["marca_nombre"] ?> </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
                     <td><input type="submit" value="Añadir"></td>
                 </tr>
             </form>
@@ -184,19 +203,31 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
                 <?php foreach ($componentes as $c): ?>
                     <tr>
                         <td><?= $c["discoDuro_nombre"] ?></td>
-                        <td><?= $c["capacidad"] ?></td>
+                        <td><?= $c["capacidad"] ?> GB</td>
                         <td><?= $c["tipo"] ?></td>
                         <td><?= $c["discoDuro_precio"] ?> €</td>
                         <td><?= $c["marca_nombre"] ?></td>
                         <td><a href="listadoComponentes.php?nombre_tabla=disco_duro&id=<?= $c["discoDuro_id"] ?>&tipo_componente=discoDuro_id">Eliminar</a></td>
                     </tr>
                 <?php endforeach; ?>
+                <!-- Añadir -->
                 <tr>
                     <td><input type="text" name="discoDuro_nombre"></td>
-                    <td><input type="text" name="capacidad"></td>
-                    <td><input type="text" name="tipo"></td>
-                    <td><input type="text" name="discoDuro_precio"></td>
-                    <td><input type="text" name="marca_id"></td>
+                    <td><input type="text" name="capacidad"> GB</td>
+                    <td><select name="tipo">
+                            <option value="" selected disabled hidden> - </option>
+                            <option value="HDD">HDD</option>
+                            <option value="SSD">SSD</option>
+                        </select>
+                    </td>
+                    <td><input type="number" name="discoDuro_precio"></td>
+                    <td><select name="marca_id">
+                            <option value="" selected disabled hidden> - </option>
+                            <?php foreach ($marcas as $m): ?>
+                                <option value=<?= $m["marca_id"] ?>><?= $m["marca_nombre"] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
                     <td><input type="submit" value="Añadir"></td>
                 </tr>
             </form>
@@ -227,12 +258,19 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
                         <td><a href="listadoComponentes.php?nombre_tabla=procesador&id=<?= $c["proc_id"] ?>&tipo_componente=proc_id">Eliminar</a></td>
                     </tr>
                 <?php endforeach; ?>
+                <!-- Añadir -->
                 <tr>
                     <td><input type="text" name="proc_nombre"></td>
                     <td><input type="text" name="gHz"></td>
                     <td><input type="text" name="nucleos"></td>
                     <td><input type="text" name="proc_precio"></td>
-                    <td><input type="text" name="marca_id"></td>
+                    <td><select name="marca_id">
+                            <option value="" selected disabled hidden> - </option>
+                            <?php foreach ($marcas as $m): ?>
+                                <option value=<?= $m["marca_id"] ?>><?= $m["marca_nombre"] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
                     <td><input type="submit" value="Añadir"></td>
                 </tr>
             </form>
@@ -256,19 +294,33 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
                 <?php foreach ($componentes as $c): ?>
                     <tr>
                         <td><?= $c["ram_nombre"] ?></td>
-                        <td><?= $c["ram_gb"] ?></td>
+                        <td><?= $c["ram_gb"] ?> GB</td>
                         <td><?= $c["ram_mhz"] ?></td>
                         <td><?= $c["ram_precio"] ?> €</td>
                         <td><?= $c["marca_nombre"] ?></td>
                         <td><a href="listadoComponentes.php?nombre_tabla=ram&id=<?= $c["ram_id"] ?>&tipo_componente=ram_id">Eliminar</a></td>
                     </tr>
                 <?php endforeach; ?>
+                <!-- Añadir -->
                 <tr>
                     <td><input type="text" name="ram_nombre"></td>
-                    <td><input type="text" name="ram_gb"></td>
+                    <td><select name="ram_gb">
+                            <option value="" selected disabled hidden> - </option>
+                            <option value="4">4</option>
+                            <option value="8">8</option>
+                            <option value="16">16</option>
+                            <option value="32">32</option>
+                        </select> GB
+                    </td>
                     <td><input type="text" name="ram_mhz"></td>
                     <td><input type="text" name="ram_precio"></td>
-                    <td><input type="text" name="marca_id"></td>
+                    <td><select name="marca_id">
+                            <option value="" selected disabled hidden> - </option>
+                            <?php foreach ($marcas as $m): ?>
+                                <option value=<?= $m["marca_id"] ?>><?= $m["marca_nombre"] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
                     <td><input type="submit" value="Añadir"></td>
                 </tr>
             </form>
@@ -292,19 +344,57 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
                 <?php foreach ($componentes as $c): ?>
                     <tr>
                         <td><?= $c["grafica_nombre"] ?></td>
-                        <td><?= $c["grafica_Gb"] ?></td>
+                        <td><?= $c["grafica_Gb"] ?> GB</td>
                         <td><?= $c["rtx"] ? "Si" : "No" ?></td>
                         <td><?= $c["grafica_precio"] ?> €</td>
                         <td><?= $c["marca_nombre"] ?></td>
                         <td><a href="listadoComponentes.php?nombre_tabla=tarjeta_grafica&id=<?= $c["grafica_id"] ?>&tipo_componente=grafica_id">Eliminar</a></td>
                     </tr>
                 <?php endforeach; ?>
+                <!-- Añadir -->
                 <tr>
                     <td><input type="text" name="grafica_nombre"></td>
-                    <td><input type="text" name="grafica_Gb"></td>
-                    <td><input type="text" name="rtx"></td>
-                    <td><input type="text" name="grafica_precio"></td>
-                    <td><input type="text" name="marca_id"></td>
+                    <td><input type="number" name="grafica_Gb"> GB</td>
+                    <td><select name="rtx">
+                            <option value="" selected disabled hidden> - </option>
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                        </select>
+                    </td>
+                    <td><input type="number" name="grafica_precio"></td>
+                    <td><select name="marca_id">
+                            <option value="" selected disabled hidden> - </option>
+                            <?php foreach ($marcas as $m): ?>
+                                <option value=<?= $m["marca_id"] ?>><?= $m["marca_nombre"] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
+                    <td><input type="submit" value="Añadir"></td>
+                </tr>
+            </form>
+        </table>
+        <?php
+        //marcas
+        $nombre_tabla = "marca";
+        $componentes = BD::getTablaComponente($nombre_tabla);
+        ?>
+        <table>
+            <form action="listadoComponentes.php" method="post">
+                <thead>
+                    <th colspan="1">Marcas</th>
+                </thead>
+                <!-- <thead>
+                    <th>Nombre</th>
+                </thead> -->
+                <?php foreach ($componentes as $c): ?>
+                    <tr>
+
+                        <td><?= $c["marca_nombre"] ?></td>
+                        <td><a href="listadoComponentes.php?nombre_tabla=marca&id=<?= $c["marca_id"] ?>&tipo_componente=marca_id">Eliminar</a></td>
+                    </tr>
+                <?php endforeach; ?>
+                <tr>
+                    <td><input type="text" name="marca_nombre"></td>
                     <td><input type="submit" value="Añadir"></td>
                 </tr>
             </form>
