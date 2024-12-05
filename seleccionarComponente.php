@@ -6,15 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Titulo segun el componente -->
     <title><?= str_replace("_"," ",ucfirst($_GET["componente"])) ?></title>
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-
-        td {
-            border: 2px solid black;
-        }
-    </style>
+    <link rel="stylesheet" href="estilo.css">
 </head>
 
 <body>
