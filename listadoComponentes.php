@@ -67,15 +67,7 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
     BD::anadirRam($grafica_nombre, $grafica_Gb, $rtx, $grafica_precio, $marca_id);
     header("Location: listadoComponentes.php");
 }
-if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_POST["rtx"]) && isset($_POST["grafica_precio"]) && isset($_POST["marca_id"])) {
-    $grafica_nombre = $_POST["grafica_nombre"];
-    $grafica_Gb = $_POST["grafica_Gb"];
-    $rtx = $_POST["rtx"];
-    $grafica_precio = $_POST["grafica_precio"];
-    $marca_id = $_POST["marca_id"];
-    BD::anadirRam($grafica_nombre, $grafica_Gb, $rtx, $grafica_precio, $marca_id);
-    header("Location: listadoComponentes.php");
-}
+//Añadir Marca
 if (isset($_POST["marca_nombre"])) {
     $marca_nombre = $_POST["marca_nombre"];
     BD::anadirMarca($marca_nombre);

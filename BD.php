@@ -208,11 +208,14 @@ class BD
     {
         try {
             $sql = "SELECT c.caja_nombre, d.discoDuro_nombre, pb.placa_nombre, p.proc_nombre, r.ram_nombre, t.grafica_nombre ";
-            $sql .= "FROM caja c, disco_duro d, placa_base pb, procesador p, ram r, tarjeta_grafica t, ordenador o ";
-            $sql .= "WHERE usuario_id = :usuario_id ";
-            $sql .= "AND o.caja_id = c.caja_id AND o.discoDuro_id = d.discoDuro_id ";
-            $sql .= "AND o.placa_id = pb.placa_id AND o.proc_id = p.proc_id ";
-            $sql .= "AND o.ram_id = r.ram_id AND o.grafica_id = t.grafica_id; ";
+            $sql .= "FROM ordenador o ";
+            $sql .= "LEFT JOIN caja c ON o.caja_id = c.caja_id ";
+            $sql .= "LEFT JOIN disco_duro d ON o.discoDuro_id = d.discoDuro_id ";
+            $sql .= "LEFT JOIN placa_base pb ON o.placa_id = pb.placa_id ";
+            $sql .= "LEFT JOIN procesador p ON o.proc_id = p.proc_id ";
+            $sql .= "LEFT JOIN ram r ON o.ram_id = r.ram_id ";
+            $sql .= "LEFT JOIN tarjeta_grafica t ON o.grafica_id = t.grafica_id ";
+            $sql .= "WHERE o.usuario_id = :usuario_id;";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':usuario_id', $usuario_id);
@@ -221,7 +224,7 @@ class BD
             if ($ordenador) {
                 return $ordenador[0];
             } else {
-                return false;
+                throw new PDOException("No se obtuvo el ordenador del usuario");
             }
         } catch (PDOException $e) {
             throw new Exception("Error al obtener el ordenador: " . $e->getMessage());
@@ -253,12 +256,68 @@ class BD
         }
     }
 
-    public static function getTablaComponente($nombre_tabla)
+    public static function getTablaComponente($nombre_tabla, $precio_max = null, $marca_filtro = null, $ordenar = null)
     {
         try {
+            // El nombre de la tabla y el nombre de las columnas es distinto
+            $tipo_componente = null;
+            switch ($nombre_tabla) {
+                case "caja":
+                    $tipo_componente = "caja";
+                    break;
+                case "disco_duro":
+                    $tipo_componente = "discoDuro";
+                    break;
+                case "placa_base":
+                    $tipo_componente = "placa";
+                    break;
+                case "procesador":
+                    $tipo_componente = "proc";
+                    break;
+                case "ram":
+                    $tipo_componente = "ram";
+                    break;
+                case "tarjeta_grafica":
+                    $tipo_componente = "grafica";
+                    break;
+            }
+            if ($tipo_componente != null) {
+                $componente_precio = $tipo_componente . "_precio";
+
+                // Para el ORDER BY
+                $ordenarColumna = null;
+                switch ($ordenar) {
+                    case "nombre":
+                        $ordenarColumna = $tipo_componente . "_nombre";
+                        break;
+                    case "precio":
+                        $ordenarColumna = $componente_precio;
+                        break;
+                    case "marca":
+                        $ordenarColumna = "marca_id";
+                        break;
+                }
+            } else{
+                throw new Exception("No se pudo obtener el tipo de componente");
+            }
+
             $sql = "SELECT c.*, m.marca_nombre ";
             $sql .= "FROM $nombre_tabla c ";
             $sql .= "LEFT JOIN marca m on m.marca_id = c.marca_id ";
+            $sql .= "WHERE 1 = 1 ";
+
+            if ($precio_max != null) {
+                $sql .= "AND c.$componente_precio <= $precio_max ";
+            }
+
+            if ($marca_filtro != null) {
+                $sql .= "AND c.marca_id = $marca_filtro ";
+            }
+
+            if ($ordenarColumna != null) {
+                $sql .= "ORDER BY $ordenarColumna ";
+            }
+
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
             $stmt->execute();
