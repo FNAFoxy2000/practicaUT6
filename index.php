@@ -22,10 +22,15 @@ session_start();
         echo "Sesión cerrada";
     }
 
-    // Si tiene email significa que está registrandose  
+    // Si tiene email y admin significa que está registrandose  
     if (isset($_POST["email"]) && isset($_POST["usuario"]) && isset($_POST["password"])) {
+        if(isset($_POST["admin"])){
+            $admin = true;
+        }else{
+            $admin = false;
+        }
         // Insert a base de datos
-        $registro = BD::RegistrarUsuario($_POST["usuario"], $_POST["password"], $_POST["email"]);
+        $registro = BD::RegistrarUsuario($_POST["usuario"], $_POST["password"], $_POST["email"], $admin);
         if ($registro) {
             echo "<p>Usuario registrado correctamente</p>";
         } else {

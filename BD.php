@@ -28,17 +28,18 @@ class BD
     }
 
     // REGISTRAR
-    public static function RegistrarUsuario($usuario, $password, $email)
+    public static function RegistrarUsuario($usuario, $password, $email, $admin)
     {
         try {
             // Crear usuario
-            $sql = "INSERT INTO usuario (usuario_nombre, password, email) VALUES (:usuario, :password, :email)";
+            $sql = "INSERT INTO usuario (usuario_nombre, password, email, admin) VALUES (:usuario, :password, :email, :admin)";
             $passwordCifrada = password_hash($password, PASSWORD_DEFAULT); // Hasheamos el password
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':usuario', $usuario);
             $stmt->bindParam(':password', $passwordCifrada);
             $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':admin', $admin);
             $stmt->execute();
 
             // Crear ordenador para el usuario
@@ -281,7 +282,7 @@ class BD
                     $tipo_componente = "grafica";
                     break;
                 case "marca":
-                    $tipo_componente = "grafica";
+                    $tipo_componente = "marca";
                     break;
             }
             if ($tipo_componente != null) {
@@ -540,7 +541,7 @@ class BD
     public static function anadirProcesador($proc_nombre, $gHz, $nucleos, $proc_precio, $marca_id)
     {
         try {
-            $sql = "INSERT INTO proc (proc_nombre, gHz, nucleos, proc_precio, marca_id) VALUES (:proc_nombre, :gHz, :nucleos, :proc_precio, :marca_id)";
+            $sql = "INSERT INTO procesador (proc_nombre, gHz, nucleos, proc_precio, marca_id) VALUES (:proc_nombre, :gHz, :nucleos, :proc_precio, :marca_id)";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':proc_nombre', $proc_nombre);
