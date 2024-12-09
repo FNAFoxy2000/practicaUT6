@@ -393,7 +393,7 @@ if (isset($_POST["marca_nombre"])) {
                 </thead> -->
                 <?php foreach ($componentes as $c): ?>
                     <tr>
-
+    
                         <td><?= $c["marca_nombre"] ?></td>
                         <td><a href="listadoComponentes.php?nombre_tabla=marca&id=<?= $c["marca_id"] ?>&tipo_componente=marca_id">Eliminar</a></td>
                     </tr>

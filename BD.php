@@ -280,6 +280,9 @@ class BD
                 case "tarjeta_grafica":
                     $tipo_componente = "grafica";
                     break;
+                case "marca":
+                    $tipo_componente = "grafica";
+                    break;
             }
             if ($tipo_componente != null) {
                 $componente_precio = $tipo_componente . "_precio";
@@ -297,7 +300,7 @@ class BD
                         $ordenarColumna = "marca_id";
                         break;
                 }
-            } else{
+            } else {
                 throw new Exception("No se pudo obtener el tipo de componente");
             }
 
