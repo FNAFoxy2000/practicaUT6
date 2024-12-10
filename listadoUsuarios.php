@@ -20,6 +20,7 @@ $usuarios = BD::getListaUsuarios();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de usuarios</title>
+    <link rel="stylesheet" href="estilo.css">
     <style>
         table {
             border-collapse: collapse;
@@ -37,7 +38,6 @@ $usuarios = BD::getListaUsuarios();
             <td>Usuario</td>
             <td>Email</td>
             <td>Es admin</td>
-            
         </thead>
         <?php foreach ($usuarios as $u): ?>
             <tr>
