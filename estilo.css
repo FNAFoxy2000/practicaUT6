@@ -16,7 +16,8 @@ body {
     border-radius: 8px;
 }
 
-h1, h2 {
+h1,
+h2 {
     color: #1a73e8;
     text-align: center;
 }
@@ -35,8 +36,10 @@ label {
     margin-bottom: 5px;
 }
 
-input, select, textarea {
-    width: 15%;
+input,
+select,
+textarea {
+    width: 25%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -45,7 +48,19 @@ input, select, textarea {
     transition: border-color 0.3s;
 }
 
-input:focus, select:focus, textarea:focus {
+.contenedorTablas {
+    input{
+        width: 50%;
+    }
+
+    select {
+        width: 65%;
+    }
+}
+
+input:focus,
+select:focus,
+textarea:focus {
     border-color: #1a73e8;
     outline: none;
     background: #ffffff;
@@ -88,7 +103,8 @@ thead {
     border: 1px solid #ddd;
 }
 
-th, td {
+th,
+td {
     padding: 10px;
     border: 1px solid #ddd;
 }
