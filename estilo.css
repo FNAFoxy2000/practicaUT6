@@ -49,10 +49,6 @@ textarea {
 }
 
 .contenedorTablas {
-    input{
-        width: 50%;
-    }
-
     select {
         width: 65%;
     }
@@ -65,7 +61,10 @@ textarea:focus {
     outline: none;
     background: #ffffff;
 }
-
+.anadir{
+    position:relative;
+    width: 100%;
+}
 /* Botones */
 button {
     width: 25%;
@@ -117,6 +116,9 @@ tr:hover {
     background-color: #e3f2fd;
 }
 
+.marca{
+    width:40%;
+}
 /* Responsive */
 @media (max-width: 768px) {
     .container {

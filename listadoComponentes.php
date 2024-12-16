@@ -64,7 +64,7 @@ if (isset($_POST["grafica_nombre"]) && isset($_POST["grafica_Gb"]) && isset($_PO
     $rtx = $_POST["rtx"];
     $grafica_precio = $_POST["grafica_precio"];
     $marca_id = $_POST["marca_id"];
-    BD::anadirRam($grafica_nombre, $grafica_Gb, $rtx, $grafica_precio, $marca_id);
+    BD::anadirGrafica($grafica_nombre, $grafica_Gb, $rtx, $grafica_precio, $marca_id);
     header("Location: listadoComponentes.php");
 }
 //Añadir Marca
@@ -145,7 +145,7 @@ if (isset($_POST["marca_nombre"])) {
                             <?php endforeach; ?>
                         </select>
                     </td>
-                    <td><input type="submit" value="Añadir"></td>
+                    <td><input class="anadir" type="submit" value="Añadir"></td>
                 </tr>
             </form>
         </table>
@@ -185,7 +185,7 @@ if (isset($_POST["marca_nombre"])) {
                             <?php endforeach; ?>
                         </select>
                     </td>
-                    <td><input type="submit" value="Añadir"></td>
+                    <td><input class="anadir" type="submit" value="Añadir"></td>
                 </tr>
             </form>
 
@@ -234,7 +234,7 @@ if (isset($_POST["marca_nombre"])) {
                             <?php endforeach; ?>
                         </select>
                     </td>
-                    <td><input type="submit" value="Añadir"></td>
+                    <td><input class="anadir" type="submit" value="Añadir"></td>
                 </tr>
             </form>
         </table>
@@ -277,7 +277,7 @@ if (isset($_POST["marca_nombre"])) {
                             <?php endforeach; ?>
                         </select>
                     </td>
-                    <td><input type="submit" value="Añadir"></td>
+                    <td><input class="anadir" type="submit" value="Añadir"></td>
                 </tr>
             </form>
         </table>
@@ -327,7 +327,7 @@ if (isset($_POST["marca_nombre"])) {
                             <?php endforeach; ?>
                         </select>
                     </td>
-                    <td><input type="submit" value="Añadir"></td>
+                    <td><input class="anadir" type="submit" value="Añadir"></td>
                 </tr>
             </form>
         </table>
@@ -375,7 +375,7 @@ if (isset($_POST["marca_nombre"])) {
                             <?php endforeach; ?>
                         </select>
                     </td>
-                    <td><input type="submit" value="Añadir"></td>
+                    <td><input class="anadir" type="submit" value="Añadir"></td>
                 </tr>
             </form>
         </table>
@@ -384,7 +384,7 @@ if (isset($_POST["marca_nombre"])) {
         $nombre_tabla = "marca";
         $componentes = BD::getTablaComponente($nombre_tabla);
         ?>
-        <table>
+        <table class="marca">
             <form action="listadoComponentes.php" method="post">
                 <thead>
                     <th colspan="1">Marcas</th>
@@ -402,7 +402,7 @@ if (isset($_POST["marca_nombre"])) {
                 <!-- Añadir -->
                 <tr>
                     <td><input type="text" name="marca_nombre" required></td>
-                    <td><input type="submit" value="Añadir"></td>
+                    <td><input class="anadir" type="submit" value="Añadir"></td>
                 </tr>
             </form>
         </table>

@@ -338,9 +338,6 @@ class BD
             self::CerrarConexion();
         }
     }
-
-
-
     // Añadir componente al ordenador
     public static function agregarComponenteOrdenador($usuario_id, $tipo_componente, $componente_id)
     {
@@ -365,7 +362,7 @@ class BD
             self::CerrarConexion();
         }
     }
-
+    
     public static function getMarcas()
     {
         try {
