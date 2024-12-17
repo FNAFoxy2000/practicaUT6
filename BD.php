@@ -342,7 +342,7 @@ class BD
     public static function agregarComponenteOrdenador($usuario_id, $tipo_componente, $componente_id)
     {
         try {
-            $sql = "UPDATE ORDENADOR SET $tipo_componente = :componente_id WHERE usuario_id = :usuario_id";
+            $sql = "UPDATE ordenador SET $tipo_componente = :componente_id WHERE usuario_id = :usuario_id";
             $conn = self::Conectar();
             $stmt = $conn->prepare($sql);
             // $stmt->bindParam(':tipo_componente', $tipo_componente);
@@ -629,7 +629,6 @@ class BD
             echo "$usuariosDatos";
             $usuariosDatos = json_decode($usuariosDatos, true); // muy importante poner true para recibir cada cosa como array asociativa.
             // al decodificar un json con un objeto, hay que reconstruir las instancias
-
         }
         exit;
     }
